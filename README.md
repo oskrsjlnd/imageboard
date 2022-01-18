@@ -1,4 +1,4 @@
-# imageboard
+# sajinboard
 # Kuvaus
 Web-sovellus kuvien jakamiseen. Sivustolle voi lisätä kuvia ja keskustella niistä.
 
