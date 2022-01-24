@@ -1,0 +1,11 @@
+venv/
+.vscode
+__pycache__
+.coverage
+htmlcov
+output.xml
+report.html
+*.db
+log.html
+*.tmp
+.pytest_cache/

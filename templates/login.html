@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <title>sajinboard</title>
+    </head>
+    <body>
+        <header class="header">
+            <nav class="navbar">
+                <ul>
+                    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+                    <li><a class="navtext" href="{{url_for('login')}}">Login</a></li>
+                    <li><a class="navtext" href="{{url_for('create_acc')}}">Register</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="login">
+            <h1>Enter username and password</h1>
+            <form action="/login" method="POST">
+                <div class= "msg">{{ msg }}</div>
+                <input class="formbox" placeholder="Username" id="username" type="text" name="username"><br>
+                <input class="formbox" placeholder="Password" id="password" type="password" name="password"><br>
+                <input class="button" type="submit" id="login-but" value="Login">
+            </form>
+        </div>
+    </body>
+</html>

@@ -4,7 +4,7 @@ Web-sovellus kuvien jakamiseen. Sivustolle voi lisätä kuvia ja keskustella nii
 
 # Toiminnallisuudet
 
-- Käyttäjä voi luoda tunnuksen ja kirjautua sisään.
+- Käyttäjä voi luoda tunnuksen ja kirjautua sisään tai ulos.
 - Käyttäjä voi valita aiheen, johon liittyviä kuvia tahtoo nähdä.
 - Käyttäjä pystyy selaamaan listaa kuvista aiheen valittuaan.
 - Käyttäjällä on mahdollisuus tuoda esille seuraava kuva satunnaisesti sivuston kaikista kuvista.
@@ -12,5 +12,5 @@ Web-sovellus kuvien jakamiseen. Sivustolle voi lisätä kuvia ja keskustella nii
 - Halutessaan käyttäjä voi lisätä arvostelun esillä olevalle kuvalle.
 - Käyttäjällä pystyy halutessaan lisäämään (tai poistamaan) kuvan seurattujen kuvien listalle.
 - Kun käyttäjä haluaa hän saa poistettua tunnuksensa.
-- Ylläpitäjä voi jäädyttää minkä tahansa tunnuksen
-- Ylläpitäjä pystyy poistamaan muiden kuvia ja kommentteja
+- Ylläpitäjä voi jäädyttää minkä tahansa tunnuksen.
+- Ylläpitäjä pystyy poistamaan muiden kuvia ja kommentteja.
