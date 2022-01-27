@@ -3,4 +3,5 @@ CREATE TABLE users(
     role TEXT,
     password TEXT,
     username TEXT UNIQUE
+    email TEXT UNIQUE
 );
