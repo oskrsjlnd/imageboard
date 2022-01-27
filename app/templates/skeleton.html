@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %} - sajinboard</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <header>
+            <nav>
+                <ul>
+                    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+                </ul>
+            </nav>
+            {% block header %}
+            <ul class="navbuttons">
+                <li><a href="{{url_for('create_acc')}}"><button>Sign Up</button></a></li>
+            </ul>
+            {% endblock %}
+            </header>
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
