@@ -9,4 +9,4 @@ report.html
 log.html
 *.tmp
 .pytest_cache/
-*.env
+.env
