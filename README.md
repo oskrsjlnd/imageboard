@@ -16,4 +16,4 @@ Web-sovellus kuvien jakamiseen. Sivustolle voi lisätä kuvia ja keskustella nii
 - Ylläpitäjä pystyy poistamaan muiden kuvia ja kommentteja.
 
 # Välipalautus 1
-- Käyttäjä voi nyt luoda tunnuksen ja kirjautua sisään tai ulos.
+- Käyttäjä voi nyt luoda tunnuksen.
