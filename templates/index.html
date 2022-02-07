@@ -1,0 +1,38 @@
+{% extends "skeleton.html" %} 
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign.css') }}">
+{% endblock %}
+{% block title %}
+    Home
+{% endblock %}
+
+{% block header %}
+{% if session.username %}
+    <ul class="navbuttons">
+        <li><a href="{{url_for('log_out')}}"><button>Log Out</button></a></li>
+    </ul>
+{% else %}
+    <ul class="navbuttons">
+        <li><a href="{{url_for('create_acc')}}"><button>Sign Up</button></a></li>
+    </ul>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if session.username %}
+    <div class="form_container">
+        <h1 class="header_1">Welcome to sajinboard!</h1>
+    </div>
+{% else %}
+<div class="form_container">
+    <h1 class="header_1">Enter username and password</h2>
+    <form action="/login" method="POST">
+        <div class= "msg">{{ msg }}</div>
+        <input placeholder="Username" id="username" type="text" name="username"><br>
+        <input placeholder="Password" id="password" type="password" name="password"><br>
+        <input type="submit" id="login-but" value="Login">
+    </form>
+</div>
+{% endif %}
+{% endblock %}
