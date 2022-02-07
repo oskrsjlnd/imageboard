@@ -2,7 +2,7 @@
     display: grid;
     place-items: center;
     width: 400px;
-    height: 300px;
+    height: 330px;
     border-radius: 1em;
     margin: 150px auto;
     background-color: #1a1a1d;
@@ -22,6 +22,16 @@
     margin-right: 30px;
     margin-bottom: 10px;
     margin-top: 10px;
+}
+
+.form_container label {
+    color: #c3073f;
+    font-size: 0.8em;
+    padding-left: 34px;
+}
+
+[data-tip]:before {
+    content: attr(data-tooltip);
 }
 
 form input[type=text], form input[type=password] {
@@ -51,4 +61,5 @@ form input[type=submit]:hover {
     display: grid;
     place-items: center;
     color:aliceblue;
+    padding-bottom: 30px;
 }

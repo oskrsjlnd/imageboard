@@ -21,8 +21,8 @@
             <h1>Enter username and password</h1>
             <form action="/login" method="POST">
                 <div class= "msg">{{ msg }}</div>
-                <input placeholder="Username" id="username" type="text" name="username"><br>
-                <input placeholder="Password" id="password" type="password" name="password"><br>
+                <input placeholder="Username" id="username" type="text" name="username" required><br>
+                <input placeholder="Password" id="password" type="password" name="password" required><br>
                 <input type="submit" id="login-but" value="Login">
             </form>
         </div>

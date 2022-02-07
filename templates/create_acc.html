@@ -18,14 +18,18 @@
                 <li><a href="{{url_for('create_acc')}}"><button>Sign Up</button></a></li>
             </ul>
         </header>
-        <div style="height:430px;" class="form_container">
-            <h1>Account Information</h1>
+        <div style="height:550px;" class="form_container">
+            <h1 class="header_1">Account Information</h1>
             <form action="/create_acc" method="POST">
                 <div class="msg">{{ msg }}</div>
-                <input placeholder="Username" id="username" type="text" name="username" size="20"><br>
-                <input placeholder="Email address" id="email" type="text" name="email"><br>
-                <input placeholder="Password" id="password" type="password" name="password" size="20"><br>
-                <input placeholder="Repeat Password" id="repeat_pw" type="password" name="repeat_pw" class="formbox"><br>
+                <label for="username">Username between 6 and 20 characters</label>
+                <input placeholder="Username" id="username" type="text" name="username" size="20" required><br>
+                <label for="email">Email address must be valid</label>
+                <input placeholder="Email address" id="email" type="text" name="email" required><br>
+                <label for="password">Password between 8 and 20 characters</label>
+                <input placeholder="Password" id="password" type="password" name="password" size="20" required><br>
+                <label for="repeat_pw">Passwords must match</label>
+                <input placeholder="Repeat Password" id="repeat_pw" type="password" name="repeat_pw" class="formbox" required><br>
                 <input type="submit" id="button" value="Sign Up">
             </form>
         </div>
