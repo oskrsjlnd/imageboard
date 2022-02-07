@@ -56,3 +56,4 @@ def create_acc_validation(username, email, password, repeat_pw):
     if not re.match("[^@]+@[^@]+\.[^@]+", email):
         return "Invalid email address"
     return "User succesfully created"
+    #
