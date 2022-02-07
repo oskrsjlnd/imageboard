@@ -1,8 +1,12 @@
-from app.__init__ import app
-from app.routes import *
+from flask import Flask
+import os
+import getpass
 
-def main():
-    app.run()
+user = getpass.getuser()
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.urandom(24).hex()
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql:///{user}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['DEBUG'] = True
 
-if __name__ == "__main__":
-    main()
+import routes
