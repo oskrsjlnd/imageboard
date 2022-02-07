@@ -14,7 +14,7 @@ def login():
         and "password" in request.form):
         username = request.form["username"]
         password = request.form["password"]
-        if db.login_validation(username, password):
+        if db.login(username, password):
             return redirect("/")
 
     msg = "Wrong username or password"
@@ -34,7 +34,7 @@ def create_acc():
         msg = create_acc_validation(username, email, password, repeat_pw)
         if (msg == "User successfully created"):
             db.new_user(username, password, email)
-            return render_template("index.html")
+            return redirect("/")
         else:
             return render_template("create_acc.html", msg = msg)
     else:
@@ -47,13 +47,14 @@ def log_out():
     return redirect("/")
 
 def create_acc_validation(username, email, password, repeat_pw):
-    if password != repeat_pw:
-        return "Passwords do not match"
-    if len(username) < 6 or len(username) > 20:
-        return "Username must be between 6 and 20 characters"
-    if len(password) < 8 or len(password) > 20:
-        return "Password must be between 8 and 20 characters"
-    if not re.match("[^@]+@[^@]+\.[^@]+", email):
-        return "Invalid email address"
-    return "User succesfully created"
-    #
+    msg = "Password must be between 8 and 20 characters\n\
+        Passwords must match\n\
+        Username must be between 6 and 20 characters\n\
+        Email address must be valid"
+    if (password != repeat_pw
+        or len(username) < 6 or len(username) > 20
+        or len(password) < 8 or len(password) > 20
+        or not re.match("[^@]+@[^@]+\.[^@]+", email)):
+        return msg
+    msg = "User succesfully created"
+    return msg

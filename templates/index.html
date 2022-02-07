@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block header %}
-{% if session.username %}
+{% if session.user_id %}
     <ul class="navbuttons">
         <li><a href="{{url_for('log_out')}}"><button>Log Out</button></a></li>
     </ul>
@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block content %}
-{% if session.username %}
+{% if session.user_id %}
     <div class="form_container">
         <h1 class="header_1">Welcome to sajinboard!</h1>
     </div>
