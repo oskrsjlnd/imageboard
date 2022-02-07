@@ -7,30 +7,31 @@ class Repository:
         self.db = SQLAlchemy(app)
     
     def new_user(self, username, password, email):
-        if self.username_is_duplicate(username):
+        try:
+            pw_hash_value = generate_password_hash(password)
+            sql = "INSERT INTO users VALUES(DEFAULT, :admin, :password, :username, :email )"
+            self.db.session.execute(sql, {"username":username, "password":pw_hash_value, "email":email, "admin":FALSE})
+            self.db.session.commit()
+        except:
             return False
-        pw_hash_value = generate_password_hash(password)
-        sql = "INSERT INTO users VALUES(DEFAULT, :admin, :password, :username, :email )"
-        self.db.session.execute(sql, {"username":username, "password":pw_hash_value, "email":email, "admin":FALSE})
-        self.db.session.commit()
-        return True
+        return self.login(username, password)
     
-    def username_is_duplicate(self, username):
-        sql = "SELECT username FROM users WHERE username=:username"
-        result = self.db.session.execute(sql, {"username":username})
-        if result is None:
-            return False
-        else:
-            return True
-    
-    def login_validation(self, username, password):
-        sql = "SELECT admin, username, password FROM users WHERE username=:username"
+    def login(self, username, password):
+        sql = "SELECT id, password, admin FROM users WHERE username=:username"
         result = self.db.session.execute(sql, {"username":username})
         user = result.fetchone()
-
-        if user is not None:
-            if check_password_hash(user[2], password):
-                return True
+        if not user:
+            return False
+        if check_password_hash(user.password, password):
+            self.db.session["user_id"] = user.id
+            return True
         return False
+    
+    def logout(self):
+        del self.db.session["user_id"]
+
+    # def user_id(self):
+    #     return self.db.session.get("user_id", 0)
+
 
 db = Repository()
