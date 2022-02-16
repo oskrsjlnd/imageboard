@@ -1,10 +1,11 @@
-DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS image;
-DROP TABLE IF EXISTS likes;
-DROP TABLE IF EXISTS comment;
-DROP TABLE IF EXISTS subject;
+DROP TABLE IF EXISTS "user" CASCADE;
+DROP TABLE IF EXISTS "subject" CASCADE;
+DROP TABLE IF EXISTS "image" CASCADE;
+DROP TABLE IF EXISTS "imglike" CASCADE;
+DROP TABLE IF EXISTS "comment" CASCADE;
+DROP TABLE IF EXISTS "cmntlike" CASCADE;
 
-CREATE TABLE user(
+CREATE TABLE "user"(
     id SERIAL PRIMARY KEY,
     admin BOOLEAN,
     password TEXT,
@@ -12,35 +13,35 @@ CREATE TABLE user(
     email TEXT UNIQUE
 );
 
-CREATE TABLE image(
+CREATE TABLE "subject"(
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES user,
-    subject_id INTEGER REFERENCES subject,
+    name TEXT
+);
+
+CREATE TABLE "image"(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES "user" (id),
+    subject_id INTEGER REFERENCES "subject" (id),
     name TEXT,
     ts_timezone TIMESTAMPTZ,
     data BYTEA
 );
 
-CREATE TABLE imglike(
+CREATE TABLE "imglike"(
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES user,
-    image_id INTEGER REFERENCES image
+    user_id INTEGER REFERENCES "user" (id),
+    image_id INTEGER REFERENCES "image" (id)
 );
 
-CREATE TABLE comment(
+CREATE TABLE "comment"(
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES user,
-    image_id INTEGER REFERENCES image,
+    user_id INTEGER REFERENCES "user" (id),
+    image_id INTEGER REFERENCES "image" (id),
     content TEXT
 ); 
 
-CREATE TABLE subject(
+CREATE TABLE "cmntlike"(
     id SERIAL PRIMARY KEY,
-    name TEXT
-);
-
-CREATE TABLE cmntlike(
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES user,
-    comment_id INTEGER REFERENCES comment
+    user_id INTEGER REFERENCES "user" (id),
+    comment_id INTEGER REFERENCES "comment" (id)
 );
