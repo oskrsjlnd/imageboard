@@ -8,8 +8,10 @@
 {% endblock %}
 
 {% block navlinks %}
-<li><a class="navtext" href="{{url_for('index')}}">My Profile</a></li>
-<li><a class="navtext" href="{{url_for('profile')}}"></a></li>
+{% if session.user_id %}
+<li><a class="navtext" href="{{url_for('my_uploads')}}">Uploads</a></li>
+{% endif %}
+{% endblock %}
 
 {% block header %}
 {% if session.user_id %}

@@ -48,9 +48,9 @@ def log_out():
     session.clear()
     return redirect("/")
 
-# @app.route("/my_uploads")
-# def my_uploads():
-#     return render_template("my_uploads.html")
+@app.route("/my_uploads")
+def my_uploads():
+    return render_template("my_uploads.html")
 
 def create_acc_validation(username, email, password, repeat_pw):
     if (password != repeat_pw
