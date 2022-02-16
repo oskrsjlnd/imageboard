@@ -7,6 +7,10 @@
     Home
 {% endblock %}
 
+{% block navlinks %}
+<li><a class="navtext" href="{{url_for('index')}}">My Profile</a></li>
+<li><a class="navtext" href="{{url_for('profile')}}"></a></li>
+
 {% block header %}
 {% if session.user_id %}
     <ul class="navbuttons">

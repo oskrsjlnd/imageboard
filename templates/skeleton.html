@@ -13,6 +13,8 @@
             <nav>
                 <ul>
                     <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+                    {% block navlinks %}
+                    {% endblock %}
                 </ul>
             </nav>
             {% block header %}
