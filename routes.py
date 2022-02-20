@@ -73,6 +73,7 @@ def send_image():
     else:
         return render_template("upload.html", msg="Check image requirements")
 
+
 def image_upload_validation(file_name, title, subject, image_data):
     if (not file_name.endswith(".jpg")
         or len(title) > 15
