@@ -1,6 +1,5 @@
 .form_container{
     display: grid;
-    place-items: center;
     width: 400px;
     height: 330px;
     border-radius: 1em;
@@ -10,6 +9,8 @@
 }
 
 .header_1 {
+    display: inherit;
+    place-items: center;
     font-weight: 200;
     font-size: 1.6em;
     color: #c3073f;
@@ -48,7 +49,7 @@ form input[type=submit] {
     color: white;
     border: 1px solid transparent;
     border-radius: 30px;
-    width: 80px;
+    width: 100px;
     height: 40px;
     transition: all .3s ease-in-out;
 }
@@ -57,9 +58,53 @@ form input[type=submit]:hover {
     background-color: #950740;
 }
 
+form input[type=file]::file-selector-button {
+    background-color: #c3073f;
+    color: white;
+    border: 2px solid #c3073f;
+    padding: .2em .4em;
+    border-radius: .5em;
+    transition: all .3s ease-in-out;
+}
+
+form input[type=file]::file-selector-button:hover {
+    background-color: #950740;
+    border: 2px solid #950740;
+}
+
+form input[type=file] {
+    color:#c3073f;
+}
+
 .msg {
     display: grid;
     place-items: center;
     color:aliceblue;
     padding-bottom: 30px;
+}
+
+.search_options {
+    list-style-type: none;
+    padding-left: 85px;
+    padding-top: 10px;
+}
+
+.img {
+    min-width: 200px;
+    max-width: 400px;
+    height: auto;
+    max-height: 700px;
+    display: grid;
+    place-items: center;
+    border: solid 1px #c3073f;
+    border-radius: 1em;
+}
+
+.random_box {
+    display: grid;
+    place-items: center;
+}
+
+.rand_button {
+    list-style-type: none;
 }
