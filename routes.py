@@ -54,8 +54,10 @@ def upload():
 @app.route("/random_image")
 def random_image():
     img = database.get_random_image()
-    return render_template("random_image.html", image=img["image"])
-
+    if img is not None:
+        return render_template("random_image.html", image=img["image"])
+    else:
+        return render_template("random_image.html", msg="Image database empty")
 @app.route("/send_image", methods=["POST"])
 def send_image():
     image = request.files["file"]
