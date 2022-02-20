@@ -15,8 +15,13 @@ Web-sovellus kuvien jakamiseen. Sivustolle voi lisätä kuvia ja keskustella nii
 - Käyttäjä voi tykätä kuvassa olevasta kommentista.
 - Käyttäjällä pystyy halutessaan lisäämään (tai poistamaan) kuvan seurattujen kuvien listalle.
 - Kun käyttäjä haluaa hän saa poistettua tunnuksensa.
+
 - Ylläpitäjä voi jäädyttää minkä tahansa tunnuksen.
 - Ylläpitäjä pystyy poistamaan muiden kuvia ja kommentteja.
 
 # Välipalautus 1
 - Käyttäjä voi nyt luoda tunnuksen, kirjautua sisään ja ulos.
+
+# Välipalautus 2
+- Kirjautunut käyttäjä voi lisätä kuvan tietoineen sovellukseen.
+- Käyttäjä voi katsoa satunnaisesti valittuja kuvia.
