@@ -44,9 +44,9 @@ def create_subject(subject):
         sql = """INSERT INTO "subject" (name) VALUES (:name)"""
         db.session.execute(sql, {"name":subject})
         db.session.commit()
-        return True
     except:
         return False
+    return True
 
 def subject_exists(subject):
     sql = """SELECT id FROM subject WHERE name=:subject"""
