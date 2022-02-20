@@ -4,6 +4,14 @@
     Create account
 {% endblock %}
 
+{% block navlinks %}
+    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+    <li><a class="navtext" href="{{url_for('random_image')}}">Random</a></li>
+{% if session.user_id %}
+    <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
+{% endif %}
+{% endblock %}
+
 {% block content %}
     <div style="height:550px;" class="form_container">
         <h1 class="header_1">Account Information</h1>
