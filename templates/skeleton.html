@@ -2,7 +2,8 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %} - sajinboard</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block head %}
         {% endblock %}
@@ -12,15 +13,22 @@
             <header>
             <nav>
                 <ul>
-                    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
                     {% block navlinks %}
                     {% endblock %}
                 </ul>
             </nav>
+            {% if session.user_id %}
+                <ul class="navbuttons">
+                    <li><a href="{{url_for('log_out')}}"><button>Log Out</button></a></li>
+                </ul>
+            {% else %}
+                <ul class="navbuttons">
+                    <li><a href="{{url_for('login')}}"><button>Sign in</button></a></li>
+                    <li><a href="{{url_for('create_acc')}}"><button>Sign up</button></a></li>
+
+                </ul>
+            {% endif %}
             {% block header %}
-            <ul class="navbuttons">
-                <li><a href="{{url_for('create_acc')}}"><button>Sign Up</button></a></li>
-            </ul>
             {% endblock %}
             </header>
             {% block content %}

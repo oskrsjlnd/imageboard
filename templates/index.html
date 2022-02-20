@@ -1,27 +1,14 @@
 {% extends "skeleton.html" %} 
 
-{% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign.css') }}">
-{% endblock %}
 {% block title %}
     Home
 {% endblock %}
 
 {% block navlinks %}
+    <li><a style="text-decoration: overline;" class="navtext" href="{{url_for('index')}}">Home</a></li>
+    <li><a class="navtext" href="{{url_for('random_image')}}">Random</a></li>
 {% if session.user_id %}
-<li><a class="navtext" href="{{url_for('my_uploads')}}">Uploads</a></li>
-{% endif %}
-{% endblock %}
-
-{% block header %}
-{% if session.user_id %}
-    <ul class="navbuttons">
-        <li><a href="{{url_for('log_out')}}"><button>Log Out</button></a></li>
-    </ul>
-{% else %}
-    <ul class="navbuttons">
-        <li><a href="{{url_for('create_acc')}}"><button>Sign Up</button></a></li>
-    </ul>
+    <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
 {% endif %}
 {% endblock %}
 

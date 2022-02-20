@@ -1,36 +1,23 @@
-<!DOCTYPE html>
-<html>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <head>
-        <title>sajinboard</title>
-    </head>
-    <body>
-        <header>
-            <nav>
-                <ul>
-                    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
-                </ul>
-            </nav>
-            <ul class="navbuttons">
-                <li><a href="{{url_for('login')}}"><button>Sign In</button></a></li>
-            </ul>
-        </header>
-        <div style="height:550px;" class="form_container">
-            <h1 class="header_1">Account Information</h1>
-            <form action="/create_acc" method="POST">
-                <div class="msg">{{ msg }}</div>
-                <label for="username">Username between 6 and 20 characters</label>
-                <input placeholder="Username" id="username" type="text" name="username" size="20" required><br>
-                <label for="email">Email address must be valid</label>
-                <input placeholder="Email address" id="email" type="text" name="email" required><br>
-                <label for="password">Password between 8 and 20 characters</label>
-                <input placeholder="Password" id="password" type="password" name="password" size="20" required><br>
-                <label for="repeat_pw">Passwords must match</label>
-                <input placeholder="Repeat Password" id="repeat_pw" type="password" name="repeat_pw" class="formbox" required><br>
-                <input type="submit" id="button" value="Sign Up">
-            </form>
-        </div>
-    </body>
-</html>
+{% extends "skeleton.html" %}
+
+{% block title %}
+    Create account
+{% endblock %}
+
+{% block content %}
+    <div style="height:550px;" class="form_container">
+        <h1 class="header_1">Account Information</h1>
+        <form action="/create_acc" method="POST">
+            <div class="msg">{{ msg }}</div>
+            <label for="username">Username between 6 and 20 characters</label>
+            <input placeholder="Username" id="username" type="text" name="username" size="20" required><br>
+            <label for="email">Email address must be valid</label>
+            <input placeholder="Email address" id="email" type="text" name="email" required><br>
+            <label for="password">Password between 8 and 20 characters</label>
+            <input placeholder="Password" id="password" type="password" name="password" size="20" required><br>
+            <label for="repeat_pw">Passwords must match</label>
+            <input placeholder="Repeat Password" id="repeat_pw" type="password" name="repeat_pw" class="formbox" required><br>
+            <input type="submit" id="button" value="Sign Up">
+        </form>
+    </div>
+{% endblock %}
