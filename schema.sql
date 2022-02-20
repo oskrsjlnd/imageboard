@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS "user" CASCADE;
 DROP TABLE IF EXISTS "subject" CASCADE;
 DROP TABLE IF EXISTS "image" CASCADE;
-DROP TABLE IF EXISTS "imglike" CASCADE;
+DROP TABLE IF EXISTS "imglike";
 DROP TABLE IF EXISTS "comment" CASCADE;
-DROP TABLE IF EXISTS "cmntlike" CASCADE;
+DROP TABLE IF EXISTS "cmntlike";
 
 CREATE TABLE "user"(
     id SERIAL PRIMARY KEY,
@@ -15,13 +15,13 @@ CREATE TABLE "user"(
 
 CREATE TABLE "subject"(
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT UNIQUE
 );
 
 CREATE TABLE "image"(
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES "user" (id),
-    subject_id INTEGER REFERENCES "subject" (id),
+    subject_name TEXT REFERENCES "subject" (name),
     name TEXT,
     ts_timezone TIMESTAMPTZ,
     data BYTEA
