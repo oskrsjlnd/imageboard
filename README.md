@@ -26,7 +26,7 @@ Web-sovellus kuvien jakamiseen. Sivustolle voi lisätä kuvia ja keskustella nii
 - Kirjautunut käyttäjä voi lisätä kuvan tietoineen sovellukseen.
 - Käyttäjä voi katsoa satunnaisesti valittuja kuvia.
 
-#Testaus
+# Testaus
 
 - Valmis käyttäjätunnus, test123 salasana: testi123, sähköpostina käytetty testi@testi.com ja samaa ei saa käyttää kahdesti.
 - Upload sivulta voi lisätä uuden kuvan tietokantaan, kuvalle asetetaan otsikko, aihe ja valitaan max 2MB tiedosto omalta koneelta.
