@@ -1,5 +1,5 @@
 # sajinboard
-[sajinboard](https://sajinboard.herokuapp.com/ "sajinboard")
+Linkki sivustolle: [sajinboard](https://sajinboard.herokuapp.com/ "sajinboard")
 # Kuvaus
 Web-sovellus kuvien jakamiseen. Sivustolle voi lisätä kuvia ja keskustella niistä.
 
