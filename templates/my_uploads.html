@@ -1,0 +1,56 @@
+{% extends "skeleton.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block title %}
+    My uploads
+{% endblock %}
+
+{% block navlinks %}
+    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+    <li><a class="navtext" href="{{url_for('random_image')}}">Random</a></li>
+    {% if session['user_id'] %}
+        <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if session['user_id'] %}
+        {% if uploads is none %}
+            <div class="form_container">
+                No uploads!
+            </div>
+        {% else %} 
+            <div class="form_container">
+                <table class="my_uploads">
+                    <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Title</th>
+                        <th>Subject</th>
+                        <th>Time</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for upload in uploads %}
+                        <tr>
+                            <td>{{ upload[0] }}</td>
+                            <td>{{ upload[1] }}</td>
+                            <td>{{ upload[2] }}</td>
+                            <td>{{ upload[3].strftime('%H:%M') }}</td>
+                            <td>{{ upload[3].strftime('%d/%m/%Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="form_container">
+            <h1 class="header_1">Please login first!</h1>
+        </div>
+    {% endif %}
+{% endblock %}
