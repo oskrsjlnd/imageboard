@@ -23,13 +23,13 @@ CREATE TABLE "image"(
     user_id INTEGER REFERENCES "user" (id),
     subject_name TEXT REFERENCES "subject" (name),
     name TEXT,
-    ts_timezone TIMESTAMPTZ,
+    timezone TIMESTAMP,
     data BYTEA
 );
 
 CREATE TABLE "imglike"(
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES "user" (id),
+    user_id INTEGER UNIQUE REFERENCES "user" (id),
     image_id INTEGER REFERENCES "image" (id)
 );
 
@@ -42,6 +42,6 @@ CREATE TABLE "comment"(
 
 CREATE TABLE "cmntlike"(
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES "user" (id),
+    user_id INTEGER UNIQUE REFERENCES "user" (id),
     comment_id INTEGER REFERENCES "comment" (id)
 );
