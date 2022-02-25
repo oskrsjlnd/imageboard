@@ -7,25 +7,25 @@
 {% block navlinks %}
     <li><a style="text-decoration: overline;" class="navtext" href="{{url_for('index')}}">Home</a></li>
     <li><a class="navtext" href="{{url_for('random_image')}}">Random</a></li>
-{% if session.user_id %}
-    <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
-{% endif %}
+    {% if session['user_id'] %}
+        <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-{% if session.user_id %}
+    {% if session['user_id'] %}
+        <div class="form_container">
+            <h1 class="header_1">Welcome to sajinboard!</h1>
+        </div>
+    {% else %}
     <div class="form_container">
-        <h1 class="header_1">Welcome to sajinboard!</h1>
+        <h1 class="header_1">Enter username and password</h2>
+        <form action="/login" method="POST">
+            <div class= "msg">{{ msg }}</div>
+            <input placeholder="Username" id="username" type="text" name="username"><br>
+            <input placeholder="Password" id="password" type="password" name="password"><br>
+            <input type="submit" id="login-but" value="Login">
+        </form>
     </div>
-{% else %}
-<div class="form_container">
-    <h1 class="header_1">Enter username and password</h2>
-    <form action="/login" method="POST">
-        <div class= "msg">{{ msg }}</div>
-        <input placeholder="Username" id="username" type="text" name="username"><br>
-        <input placeholder="Password" id="password" type="password" name="password"><br>
-        <input type="submit" id="login-but" value="Login">
-    </form>
-</div>
-{% endif %}
+    {% endif %}
 {% endblock %}

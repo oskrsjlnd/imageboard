@@ -19,7 +19,8 @@
             </nav>
             {% if session.user_id %}
                 <ul class="navbuttons">
-                    <li><a href="{{url_for('log_out')}}"><button>Log Out</button></a></li>
+                    <li><a href="{{url_for('my_uploads')}}"><button>My uploads</button></a></li>
+                    <li><a href="{{url_for('log_out')}}"><button>Log out</button></a></li>
                 </ul>
             {% else %}
                 <ul class="navbuttons">

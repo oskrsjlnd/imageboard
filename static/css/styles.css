@@ -1,7 +1,7 @@
 .form_container{
     display: grid;
-    width: 400px;
-    height: 330px;
+    width: fit-content;
+    height: fit-content;
     border-radius: 1em;
     margin: 150px auto;
     background-color: #1a1a1d;
@@ -14,6 +14,7 @@
     font-weight: 200;
     font-size: 1.6em;
     color: #c3073f;
+    padding: 10px 10px 10px 10px;
 }
 
 .form_container form input {
@@ -92,11 +93,8 @@ form input[type=file] {
 .img {
     min-width: 200px;
     max-width: 400px;
-    height: auto;
     max-height: 700px;
-    display: grid;
-    place-items: center;
-    border: solid 1px #c3073f;
+    padding: 10px 10px;
     border-radius: 1em;
 }
 
@@ -104,7 +102,23 @@ form input[type=file] {
     display: grid;
     place-items: center;
 }
+.random_box a {
+    padding-bottom: 10px;
+}
 
-.rand_button {
-    list-style-type: none;
+.my_uploads {
+    color: #c3073f;
+    border: 1px solid #950740;
+    border-radius: 1em;
+    font-size: 1em;
+}
+
+.my_uploads thead tr th {
+    color: #950740;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.my_uploads tbody tr td{
+    padding: 12px 15px;
 }

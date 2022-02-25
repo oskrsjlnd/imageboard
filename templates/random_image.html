@@ -11,20 +11,18 @@
 {% block navlinks %}
     <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
     <li><a style="text-decoration: overline;" class="navtext" href="{{url_for('random_image')}}">Random</a></li>
-{% if session.user_id %}
-    <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
-{% endif %}
+    {% if session['user_id'] %}
+        <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-    <div style="height:800px; width:500px;" class="form_container">
+    <div class="form_container">
         <h1 class="header_1">{{msg}}</h1>
         <div class="random_box">
-            <ul class="rand_button">
-                <li><a href="{{url_for('random_image')}}"><button>Random</button></a></li>
-            </ul>
             <img src="data:image/jpeg;base64, {{image}}"
-                alt="image" id="imageslot" class="img">
+            alt="image" id="imageslot" class="img">
+            <a href="{{url_for('random_image')}}"><button>Random</button></a>      
         </div>
     </div>
 {% endblock %}
