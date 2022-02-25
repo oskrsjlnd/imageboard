@@ -31,7 +31,7 @@ def upload_image(user_id, subject_name, name, data):
     if not subject_exists(subject_name):
         create_subject(subject_name)
     try:
-        sql = """INSERT INTO "image" (user_id, subject_name, name, data, ts_timezone) 
+        sql = """INSERT INTO "image" (user_id, subject_name, name, data, timezone) 
                 VALUES (:user_id, :subject_name, :name, :data, NOW())"""
         db.session.execute(sql, {"user_id":user_id, "subject_name":subject_name, "name":name, "data":data})
         db.session.commit()
@@ -56,21 +56,46 @@ def subject_exists(subject):
     return False
 
 def get_random_image():
-    sql_details = """SELECT id, subject_name, name, ts_timezone
-            FROM "image" ORDER BY random() limit 1"""
+    sql_details = """SELECT subject_name, name, timezone, encode(data, 'base64')
+            FROM "image" ORDER BY RANDOM() LIMIT 1"""
     result = db.session.execute(sql_details)
     data = result.fetchone()
 
     if data is not None:
         details = {}
-        details["subject_name"] = data[1]
-        details["title"] = data[2]
-        details["time"] = data[3]
-
-        row_id = data[0]
-        sql_image_data = """SELECT encode(data, 'base64') FROM image WHERE id=:row_id"""
-        converted_img = db.session.execute(sql_image_data, {"row_id":row_id}).fetchone()
-        details["image"] = converted_img[0]
+        details["subject_name"] = data[0]
+        details["title"] = data[1]
+        details["time"] = data[2]
+        details["image"] = data[3]
         return details
     else:
         return None
+
+def get_user_uploads(user_id):
+    sql = """SELECT id, subject_name, name, timezone FROM "image" 
+            WHERE user_id=:user_id ORDER BY timezone"""
+    result = db.session.execute(sql, {"user_id":user_id})
+    data = result.fetchall()
+    result.close()
+
+    if data is not None:
+        return data
+    else:
+        return None
+
+# def like_image(user_id, image_id):
+#     sql = """INSERT INTO imglike (user_id, image_id)
+#             VALUES (:user_id, :image_id)"""
+#     try:
+#         db.session.execute(sql, {"user_id":user_id, "image_id":image_id})
+#         db.session.commit()
+#     except:
+#         return False
+#     return True
+
+# def post_comment(user_id, image_id, content):
+#     sql = """INSERT INTO comment"""
+
+# def get_image_stats(image_id):
+#     sql = """SELECT"""
+ 

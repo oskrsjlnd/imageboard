@@ -47,6 +47,15 @@ def log_out():
     session.clear()
     return redirect("/")
 
+@app.route("/my_uploads")
+def my_uploads():
+    if "user_id" in session:
+        user_id = session["user_id"]
+        upload_list = database.get_user_uploads(user_id)
+        return render_template("my_uploads.html", uploads=upload_list)
+    else:
+        return render_template("my_uploads.html")
+
 @app.route("/upload")
 def upload():
     return render_template("upload.html")
@@ -58,6 +67,7 @@ def random_image():
         return render_template("random_image.html", image=img["image"])
     else:
         return render_template("random_image.html", msg="Image database empty")
+
 @app.route("/send_image", methods=["POST"])
 def send_image():
     image = request.files["file"]
