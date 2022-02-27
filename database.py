@@ -5,7 +5,7 @@ from db import db
 def new_user(username, password, email):
     try:
         pw_hash_value = generate_password_hash(password)
-        sql = """INSERT INTO "user" (username, password, email, admin)
+        sql = """INSERT INTO "users" (username, password, email, admin)
                 VALUES (:username, :password, :email, :admin)"""
         db.session.execute(sql, {"username":username, "password":pw_hash_value, "email":email, "admin":'f'})
         db.session.commit()
@@ -14,8 +14,8 @@ def new_user(username, password, email):
     return login(username, password)
 
 def login(username, password):
-    sql = """SELECT id, username, admin, password 
-            FROM "user" WHERE username=:username"""
+    sql = """SELECT user_id, username, admin, password 
+            FROM "users" WHERE username=:username"""
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if not user:
@@ -49,7 +49,7 @@ def create_subject(subject):
     return True
 
 def subject_exists(subject):
-    sql = """SELECT id FROM subject WHERE name=:subject"""
+    sql = """SELECT subject_id FROM subject WHERE name=:subject"""
     result = db.session.execute(sql, {"subject":subject}).fetchone()
     if result is not None:
         return True
@@ -72,7 +72,7 @@ def get_random_image():
         return None
 
 def get_user_uploads(user_id):
-    sql = """SELECT id, subject_name, name, timezone FROM "image" 
+    sql = """SELECT image_id, subject_name, name, timezone FROM "image" 
             WHERE user_id=:user_id ORDER BY timezone"""
     result = db.session.execute(sql, {"user_id":user_id})
     data = result.fetchall()
@@ -82,6 +82,40 @@ def get_user_uploads(user_id):
         return data
     else:
         return None
+
+def get_image(image_id):
+    sql = """SELECT subject_name, name, timezone, encode(data, 'base64'), user_id, image_id
+            FROM "image" WHERE image_id=:image_id"""
+    result = db.session.execute(sql, {"image_id":image_id})
+    data = result.fetchone()
+
+    if data is not None:
+        details = {}
+        details["subject_name"] = data[0]
+        details["title"] = data[1]
+        details["time"] = data[2]
+        details["image"] = data[3]
+        details["user_id"] = data[4]
+        details["image_id"] = data[5]
+        return details
+    else:
+        return None
+
+def delete_image(image_id):
+    try:
+        sql = """DELETE FROM "image" WHERE image_id=:image_id"""
+        db.session.execute(sql, {"image_id":image_id})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def get_images_by_subject(subject):
+    sql = """SELECT image_id, encode(data, 'base64')
+            FROM "image" WHERE subject_name=:subject"""
+    result = db.session.execute(sql, {"subject":subject})
+    data = result.fetchall()
+    return data
 
 # def like_image(user_id, image_id):
 #     sql = """INSERT INTO imglike (user_id, image_id)
@@ -93,8 +127,26 @@ def get_user_uploads(user_id):
 #         return False
 #     return True
 
-# def post_comment(user_id, image_id, content):
-#     sql = """INSERT INTO comment"""
+def post_comment(user_id, image_id, content):
+    try:
+        sql = """INSERT INTO "comment" (user_id, image_id, content)
+                VALUES (:user_id, :image_id, :content)"""
+        db.session.execute(sql, {"user_id":user_id, "image_id":image_id, "content":content})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def get_comments(image_id):
+    sql = """SELECT comment_id, username, content 
+            FROM "comment" 
+            LEFT OUTER JOIN "users"
+            ON comment.user_id=users.user_id
+            WHERE image_id=:image_id"""
+    result = db.session.execute(sql, {"image_id":image_id})
+    data = result.fetchall()
+    return data
+
 
 # def get_image_stats(image_id):
 #     sql = """SELECT"""
