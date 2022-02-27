@@ -5,8 +5,6 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% block head %}
-        {% endblock %}
     </head>
     <body>
         <div class="container">
@@ -17,18 +15,15 @@
                     {% endblock %}
                 </ul>
             </nav>
+            <ul class="navbuttons">
             {% if session.user_id %}
-                <ul class="navbuttons">
-                    <li><a href="{{url_for('my_uploads')}}"><button>My uploads</button></a></li>
-                    <li><a href="{{url_for('log_out')}}"><button>Log out</button></a></li>
-                </ul>
+                    <li><a href="{{url_for('my_uploads')}}"><button class="navbutton">My uploads</button></a></li>
+                    <li><a href="{{url_for('log_out')}}"><button class="navbutton">Log out</button></a></li>
             {% else %}
-                <ul class="navbuttons">
-                    <li><a href="{{url_for('login')}}"><button>Sign in</button></a></li>
-                    <li><a href="{{url_for('create_acc')}}"><button>Sign up</button></a></li>
-
-                </ul>
+                    <li><a href="{{url_for('login')}}"><button class="navbutton">Sign in</button></a></li>
+                    <li><a href="{{url_for('create_acc')}}"><button class="navbutton">Sign up</button></a></li>
             {% endif %}
+            </ul>
             {% block header %}
             {% endblock %}
             </header>
