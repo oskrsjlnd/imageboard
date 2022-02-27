@@ -1,16 +1,12 @@
 {% extends "skeleton.html" %}
 
-{% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-{% endblock %}
-
 {% block title %}
     Browse
 {% endblock %}
 
 {% block navlinks %}
     <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
-    <li><a style="text-decoration: overline;" class="navtext" href="{{url_for('random_image')}}">Random</a></li>
+    <li><a class="navtext" href="{{url_for('search')}}">Search</a></li>
     {% if session['user_id'] %}
         <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
     {% endif %}
@@ -18,11 +14,20 @@
 
 {% block content %}
     <div class="form_container">
-        <h1 class="header_1">{{msg}}</h1>
-        <div class="random_box">
-            <img src="data:image/jpeg;base64, {{image}}"
+    {% if data|length == 0 %}
+        <h1 class="header_1">{{ msg }}</h1>
+    {% else %}
+        <div class="image_box">
+            <ul class="image_data" >
+                <li class="list_elem_text"><span>Title</span><br> {{ data["title"] }}</li>
+                <li class="list_elem_text"><span>Subject</span><br> {{ data["subject_name"] }}</li>
+                <li class="list_elem_time"><span>Time</span><br> {{ data["time"].strftime('%H:%M') }}</li>
+                <li class="list_elem_date"><span>Date</span><br> {{ data["time"].strftime('%d/%m/%Y') }}</li>    
+            </ul>
+            <img src="data:image/jpeg;base64, {{data["image"]}}"
             alt="image" id="imageslot" class="img">
             <a href="{{url_for('random_image')}}"><button>Random</button></a>      
         </div>
+    {% endif %}
     </div>
 {% endblock %}
