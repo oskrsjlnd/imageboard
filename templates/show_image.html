@@ -1,0 +1,55 @@
+{% extends "skeleton.html" %}
+
+{% block title %}
+    Image
+{% endblock %}
+
+{% block navlinks %}
+    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+    <li><a class="navtext" href="{{url_for('search')}}">Search</a></li>
+    {% if session['user_id'] %}
+        <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="form_container">
+    {% if image_data is not defined %}
+        <h1 class="header_1">{{msg}}</h1>
+    {% else %}
+        <div class="image_box">
+            <ul class="image_data" >
+                <li class="list_elem_text"><span>Title</span><br> {{ image_data["title"] }}</li>
+                <li class="list_elem_text"><span>Subject</span><br> {{ image_data["subject_name"] }}</li>
+                <li class="list_elem_time"><span>Time</span><br> {{ image_data["time"].strftime('%H:%M') }}</li>
+                <li class="list_elem_date"><span>Date</span><br> {{ image_data["time"].strftime('%d/%m/%Y') }}</li>    
+            </ul>
+            <img src="data:image/jpeg;base64, {{image_data["image"]}}"
+            alt="image" id="imageslot" class="img">
+        </div>
+        {% if session["user_id"] == image_data["user_id"] %}
+            <div class="image_box">
+                <a method="POST" href="{{url_for('delete_image', user_id=session["user_id"], image_id=image_data["image_id"])}}"><button class="delete_button">Delete image</button></a>
+            </div>
+        {% endif %}
+        <div class="comment_section">
+        {% if session["user_id"] %}
+                <form class="comment_form" id="comment_form" class="form" action="/post_comment/{{image_data["image_id"]}}" method="POST">
+                    <textarea placeholder="Enter comment here" class="comment_input" rows="10" cols="20" id="comment" name="comment" maxlength="200" required autofocus></textarea>
+                    <input style="width:70px;" type="submit" id="comment_button" value="Send comment">
+                </form>
+        {% endif %}
+            {% if comment_data is defined and comment_data|length > 0 %}
+                <div class="comment_section">
+                    {% for comment in comment_data %}
+                        <div class="comment_box">
+                            <div class="comment_user">{{ comment[1] }}</div>
+                            <div class="comment_text">{{ comment[2] }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

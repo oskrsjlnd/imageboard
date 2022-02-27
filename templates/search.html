@@ -1,0 +1,39 @@
+{% extends "skeleton.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block navlinks %}
+    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+    <li><a class="navtext active" href="{{url_for('search')}}">Search</a></li>
+    {% if session['user_id'] %}
+        <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="form_container">
+        <h1 class="header_1">Choose a subject</h1>
+        <div class="subject_box">
+            <a href="{{url_for('category', subject="funny")}}"><button class="subj_button">Funny</button></a>
+            <a href="{{url_for('category', subject="cats")}}"><button class="subj_button">Cats</button></a>
+            <a href="{{url_for('category', subject="dogs")}}"><button class="subj_button">Dogs</button></a>
+            <a href="{{url_for('category', subject="anime")}}"><button class="subj_button">Anime</button></a>
+        </div>
+
+        <div class="subject_box">
+            <a href="{{url_for('category', subject="trains")}}"><button class="subj_button">Trains</button></a>
+            <a href="{{url_for('category', subject="gaming")}}"><button class="subj_button">Gaming</button></a>
+            <a href="{{url_for('category', subject="art")}}"><button class="subj_button">Art</button></a>
+            <a href="{{url_for('category', subject="misc")}}"><button class="subj_button">Misc</button></a>
+        </div>
+    </div>
+    <div class="form_container">
+        <h1 class="header_1">OR</h1>
+    </div>
+    <div class="form_container">
+        <h1 class="header_1">Click for random image</h1>
+        <a class="search_button" href="{{url_for('random_image')}}"><button>Random</button></a>
+    </div>
+{% endblock %}

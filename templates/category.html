@@ -1,0 +1,31 @@
+{% extends "skeleton.html" %}
+
+{% block title %}
+    {{ subj }}
+{% endblock %}
+
+{% block navlinks %}
+    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+    <li><a class="navtext" href="{{url_for('search')}}">Search</a></li>
+    {% if session['user_id'] %}
+        <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="category_container">
+    {% if data is defined %}
+        <h1 class="header_1">Click on image to navigate to corresponding page!</h1>
+        <div class="image_grid">
+        {% for img in data %}
+            <a href="{{url_for('show_image', id=img[0])}}">
+            <img class="preview_img" src="data:image/jpeg;base64, {{ img[1] }}"
+            alt="image" id="imageslot" class="img">
+            </a>
+        {% endfor %}
+        </div>
+    {% else %}
+        <h1 class="header_1">Category is empty</h1>
+    {% endif %}
+    </div>
+{% endblock %}

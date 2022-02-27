@@ -1,0 +1,16 @@
+{% extends "skeleton.html" %}
+
+{% block title %}
+    Notification
+{% endblock %}
+
+{% block navlinks %}
+    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+    <li><a class="navtext" href="{{url_for('search')}}">Search</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="form_container">
+        <h1 class="header_1">{{ msg }}</h1>
+    </div>
+{% endblock %}
