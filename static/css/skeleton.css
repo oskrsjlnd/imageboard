@@ -21,14 +21,14 @@ header {
     align-items: center;
 }
 
-button {
+.navbutton {
     background-color: #c3073f;
     color: silver;
-    font-size: 1em;
+    font-size: .8em;
     border: transparent;
     margin: auto;
     margin-right: 5px;
-    padding: 15px 32px;
+    padding: 13px 20px;
     text-align: center;
     text-decoration: none;
     border-radius: 2em;
@@ -46,12 +46,12 @@ button:hover {
 
 .navbuttons li{
     display: inline-block;
-    padding-right: 5px;
-    padding-left: 5px;
+    padding-right: 3px;
+    padding-left: 3px;
 }
 
 nav {
-    height: 85px;
+    height: 70px;
 }
 
 nav ul {
@@ -61,8 +61,9 @@ nav ul {
 }
 
 nav li{
+    font-size: .82em;
     display: inline-block;
-    padding-top: 23px;
+    padding-top: 15px;
     padding-bottom: 10px;
     padding-right: 10px;
     padding-left: 10px;
@@ -70,6 +71,7 @@ nav li{
     margin-right: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
+    text-shadow: 2px 2px 10px #950740;
 }
 
 nav li::after {
