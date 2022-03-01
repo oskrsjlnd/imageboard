@@ -47,24 +47,6 @@ def log_out():
     session.clear()
     return redirect("/")
 
-@app.route("/my_uploads")
-def my_uploads():
-    if "user_id" in session:
-        user_id = session["user_id"]
-        upload_list = database.get_user_uploads(user_id)
-        return render_template("my_uploads.html", uploads=upload_list)
-    else:
-        return render_template("login_error.html")
-
-
-@app.route("/show_image/<int:id>")
-def show_image(id):
-    image_data = database.get_image(id)
-    comment_data = database.get_comments(id)
-    if image_data is not None:
-        return render_template("show_image.html", image_data=image_data, comment_data=comment_data)
-    else:
-        return render_template("show_image.html", msg="No image found")
 
 @app.route("/upload")
 def upload():
@@ -82,13 +64,37 @@ def category(subject):
     else:
         return render_template("category.html", subject=subject)
 
+@app.route("/my_uploads")
+def my_uploads():
+    if "user_id" in session:
+        user_id = session["user_id"]
+        upload_list = database.get_user_uploads(user_id)
+        return render_template("my_uploads.html", uploads=upload_list)
+    else:
+        return render_template("login_error.html")
+
 @app.route("/random_image")
 def random_image():
-    data = database.get_random_image()
-    if data is not None:
-        return render_template("random_image.html", data=data)
+    image_data = database.get_random_image()
+    comment_data = database.get_comments(image_data["image_id"])
+    likes = database.get_likes(image_data["image_id"])
+
+    if image_data is not None:
+        return render_template("random_image.html", image_data=image_data, comment_data=comment_data, likes=likes)
     else:
         return render_template("random_image.html", msg="Whoops, 0 images on site")
+
+@app.route("/show_image/<int:image_id>")
+def show_image(image_id):
+    image_data = database.get_image(image_id)
+    comment_data = database.get_comments(image_id)
+    likes = database.get_likes(image_data["image_id"])
+
+    if image_data is not None:
+        return render_template("show_image.html", image_data=image_data, comment_data=comment_data, likes=likes)
+    else:
+        return render_template("show_image.html", msg="No image found")
+
 
 @app.route("/send_image", methods=["POST"])
 def send_image():
@@ -107,16 +113,6 @@ def send_image():
     else:
         return render_template("upload.html", msg="Check image requirements")
 
-@app.route("/post_comment/<int:image_id>", methods=["POST"])
-def post_comment(image_id):
-    if "user_id" in session:
-        user_id = session["user_id"]
-        content = request.form["comment"]
-        if database.post_comment(user_id, image_id, content):
-            return redirect(f"/show_image/{image_id}")
-    else:
-        return render_template("login_error.html")
-
 @app.route("/delete_image/<int:user_id>/<int:image_id>")
 def delete_image(image_id, user_id):
     if "user_id" in session:
@@ -128,7 +124,49 @@ def delete_image(image_id, user_id):
     else:
         return render_template("login_error.html")
 
+@app.route("/edit_image_title/<int:user_id>/<int:image_id>", methods=["POST"])
+def edit_image_title(image_id, user_id):
+    if "user_id" in session:
+        if session["user_id"] == user_id:
+            new_title = request.form["new_title"]
+            if database.edit_image_title(image_id, new_title):
+                return redirect(f"/show_image/{image_id}")
+        else:
+            return render_template("notification.html", msg="You can only edit titles of your images")
+    else:
+        return render_template("login_error.html")
+            
 
+@app.route("/like_image/<int:image_id>", methods=["POST"])
+def like_image(image_id):
+    if "user_id" in session:
+        user_id = session["user_id"]
+        database.like_image(user_id, image_id)
+        return redirect(f"/show_image/{image_id}")
+    else:
+        return render_template("login_error.html")
+
+
+@app.route("/post_comment/<int:image_id>", methods=["POST"])
+def post_comment(image_id):
+    if "user_id" in session:
+        user_id = session["user_id"]
+        content = request.form["comment"]
+        if database.post_comment(user_id, image_id, content):
+            return redirect(f"/show_image/{image_id}")
+        else:
+            return render_template("notification.html", msg="You can only delete your own posts")
+    else:
+        return render_template("login_error.html")
+
+@app.route("/delete_comment/<int:user_id>/<int:image_id>/<int:comment_id>")
+def delete_comment(comment_id, image_id, user_id):
+    if "user_id" in session:
+        if user_id == session["user_id"]:
+            if database.delete_comment(comment_id):
+                return redirect(f"/show_image/{image_id}")
+
+#helper functions
 def image_upload_validation(file_name, title, subject, image_data):
     if (not file_name.endswith(".jpg")
         or len(title) > 15
