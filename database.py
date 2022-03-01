@@ -27,17 +27,6 @@ def login(username, password):
         return True
     return False
 
-def upload_image(user_id, subject_name, name, data):
-    if not subject_exists(subject_name):
-        create_subject(subject_name)
-    try:
-        sql = """INSERT INTO "image" (user_id, subject_name, name, data, timezone) 
-                VALUES (:user_id, :subject_name, :name, :data, NOW())"""
-        db.session.execute(sql, {"user_id":user_id, "subject_name":subject_name, "name":name, "data":data})
-        db.session.commit()
-    except:
-        return False
-    return True
 
 def create_subject(subject):
     try:
@@ -55,21 +44,39 @@ def subject_exists(subject):
         return True
     return False
 
-def get_random_image():
-    sql_details = """SELECT subject_name, name, timezone, encode(data, 'base64')
-            FROM "image" ORDER BY RANDOM() LIMIT 1"""
-    result = db.session.execute(sql_details)
-    data = result.fetchone()
 
-    if data is not None:
-        details = {}
-        details["subject_name"] = data[0]
-        details["title"] = data[1]
-        details["time"] = data[2]
-        details["image"] = data[3]
-        return details
-    else:
-        return None
+def upload_image(user_id, subject_name, name, data):
+    if not subject_exists(subject_name):
+        create_subject(subject_name)
+    try:
+        sql = """INSERT INTO "image" (user_id, subject_name, name, data, timezone) 
+                VALUES (:user_id, :subject_name, :name, :data, NOW())"""
+        db.session.execute(sql, {"user_id":user_id, "subject_name":subject_name, "name":name, "data":data})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def delete_image(image_id):
+    try:
+        sql = """DELETE FROM "image" WHERE image_id=:image_id"""
+        db.session.execute(sql, {"image_id":image_id})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def edit_image_title(image_id, new_title):
+    try:
+        sql = """UPDATE "image"
+                SET name=:new_title
+                WHERE image_id=:image_id"""
+        db.session.execute(sql, {"new_title":new_title, "image_id":image_id})
+        db.session.commit()
+    except:
+        return False
+    return True
+
 
 def get_user_uploads(user_id):
     sql = """SELECT image_id, subject_name, name, timezone FROM "image" 
@@ -82,6 +89,32 @@ def get_user_uploads(user_id):
         return data
     else:
         return None
+
+
+def get_random_image():
+    sql = """SELECT subject_name, name, timezone, encode(data, 'base64'), user_id, image_id
+                    FROM "image" ORDER BY RANDOM() LIMIT 1"""
+    result = db.session.execute(sql)
+    data = result.fetchone()
+
+    if data is not None:
+        details = {}
+        details["subject_name"] = data[0]
+        details["title"] = data[1]
+        details["time"] = data[2]
+        details["image"] = data[3]
+        details["user_id"] = data[4]
+        details["image_id"] = data[5]
+        return details
+    else:
+        return None
+
+def get_images_by_subject(subject):
+    sql = """SELECT image_id, encode(data, 'base64')
+            FROM "image" WHERE subject_name=:subject"""
+    result = db.session.execute(sql, {"subject":subject})
+    data = result.fetchall()
+    return data
 
 def get_image(image_id):
     sql = """SELECT subject_name, name, timezone, encode(data, 'base64'), user_id, image_id
@@ -101,36 +134,28 @@ def get_image(image_id):
     else:
         return None
 
-def delete_image(image_id):
+
+def like_image(user_id, image_id):
+    sql = """INSERT INTO imglike (user_id, image_id)
+            VALUES (:user_id, :image_id)"""
     try:
-        sql = """DELETE FROM "image" WHERE image_id=:image_id"""
-        db.session.execute(sql, {"image_id":image_id})
+        db.session.execute(sql, {"user_id":user_id, "image_id":image_id})
         db.session.commit()
     except:
         return False
     return True
 
-def get_images_by_subject(subject):
-    sql = """SELECT image_id, encode(data, 'base64')
-            FROM "image" WHERE subject_name=:subject"""
-    result = db.session.execute(sql, {"subject":subject})
-    data = result.fetchall()
-    return data
-
-# def like_image(user_id, image_id):
-#     sql = """INSERT INTO imglike (user_id, image_id)
-#             VALUES (:user_id, :image_id)"""
-#     try:
-#         db.session.execute(sql, {"user_id":user_id, "image_id":image_id})
-#         db.session.commit()
-#     except:
-#         return False
-#     return True
+def get_likes(image_id):
+    sql = """SELECT COUNT(*) FROM "imglike"
+            WHERE image_id=:image_id"""
+    result = db.session.execute(sql, {"image_id":image_id})
+    data = result.fetchone()[0]
+    return result
 
 def post_comment(user_id, image_id, content):
     try:
-        sql = """INSERT INTO "comment" (user_id, image_id, content)
-                VALUES (:user_id, :image_id, :content)"""
+        sql = """INSERT INTO "comment" (user_id, image_id, content, time)
+                VALUES (:user_id, :image_id, :content, NOW())"""
         db.session.execute(sql, {"user_id":user_id, "image_id":image_id, "content":content})
         db.session.commit()
     except:
@@ -138,16 +163,22 @@ def post_comment(user_id, image_id, content):
     return True
 
 def get_comments(image_id):
-    sql = """SELECT comment_id, username, content 
+    sql = """SELECT comment_id, username, content, time, users.user_id
             FROM "comment" 
             LEFT OUTER JOIN "users"
             ON comment.user_id=users.user_id
-            WHERE image_id=:image_id"""
+            WHERE image_id=:image_id
+            ORDER BY time DESC"""
     result = db.session.execute(sql, {"image_id":image_id})
     data = result.fetchall()
     return data
 
+def delete_comment(comment_id):
+    try:
+        sql = """DELETE FROM comment WHERE comment_id=:comment_id"""
+        db.session.execute(sql, {"comment_id":comment_id})
+        db.session.commit()
+    except:
+        return False
+    return True
 
-# def get_image_stats(image_id):
-#     sql = """SELECT"""
- 
