@@ -13,23 +13,23 @@
 {% endblock %}
 
 {% block content %}
-    <div class="form_container">
+    <div class="item_container">
     {% if session['user_id'] %}
             <h1 class="header_1">You are already logged in as:</h1>
-            <h1 style="font-size: 1em;" class="header_1">{{ session["username"] }}</h1>
+            <h1 class="header_2">{{ session["username"] }}</h1>
     {% else %}
             <h1 class="header_1">Account Information</h1>
             <form class="form" action="/create_acc" method="POST">
                 <div class="msg">{{ msg }}</div>
-                <label for="username">Username 6-20 characters<br></label>
-                <input autofocus placeholder="Username" id="username" type="text" name="username" size="20" required><br>
-                <label for="email">Email address must be valid<br></label>
-                <input placeholder="Email address" id="email" type="text" name="email" required><br>
-                <label for="password">Password 8-20 characters<br></label>
-                <input placeholder="Password" id="password" type="password" name="password" size="20" required><br>
-                <label for="repeat_pw">Passwords must match<br></label>
-                <input placeholder="Repeat Password" id="repeat_pw" type="password" name="repeat_pw" class="formbox" required><br>
-                <input type="submit" id="button" value="Sign Up">
+                <label class="form_label" for="username">Username 6-20 characters<br></label>
+                <input class="account_info" autofocus placeholder="Username" id="username" type="text" name="username" size="20" required><br>
+                <label class="form_label" for="email">Email address must be valid<br></label>
+                <input class="account_info" placeholder="Email address" id="email" type="text" name="email" required><br>
+                <label class="form_label" for="password">Password 8-20 characters<br></label>
+                <input class="account_info" placeholder="Password" id="password" type="password" name="password" size="20" required><br>
+                <label class="form_label" for="repeat_pw">Passwords must match<br></label>
+                <input class="account_info" placeholder="Repeat Password" id="repeat_pw" type="password" name="repeat_pw" class="formbox" required><br>
+                <input class="submit_button" type="submit" id="button" value="Sign Up">
             </form>
     {% endif %}
     </div>

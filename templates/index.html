@@ -13,19 +13,19 @@
 {% endblock %}
 
 {% block content %}
-    <div class="form_container">
+    <div class="item_container">
     {% if session['user_id'] %}
             <h1 class="header_1">Welcome to sajinboard!</h1>
-            <h1 style="font-size: 1em;" class="header_1">Logged in as: {{ session["username"] }}</h1>
+            <h1 class="header_2">Logged in as: {{ session["username"] }}</h1>
     {% else %}
         <h1 class="header_1">Enter username and password</h2>
         <form class="form" action="/login" method="POST">
             {% if msg is defined %}
                 <div class= "msg">{{ msg }}</div>
             {% endif %}
-            <input autofocus placeholder="Username" id="username" type="text" name="username"><br>
-            <input placeholder="Password" id="password" type="password" name="password"><br>
-            <input type="submit" id="login-but" value="Login">
+            <input class="account_info" autofocus placeholder="Username" id="username" type="text" name="username"><br>
+            <input class="account_info" placeholder="Password" id="password" type="password" name="password"><br>
+            <input class="submit_button" type="submit" id="login-but" value="Login">
         </form>
     {% endif %}
     </div>

@@ -1,7 +1,7 @@
 {% extends "skeleton.html" %}
 
 {% block title %}
-    {{ subj }}
+    {{ subject }}
 {% endblock %}
 
 {% block navlinks %}
@@ -18,14 +18,14 @@
         <h1 class="header_1">Click on image to navigate to corresponding page!</h1>
         <div class="image_grid">
         {% for img in data %}
-            <a href="{{url_for('show_image', id=img[0])}}">
+            <a href="{{url_for('show_image', image_id=img[0])}}">
             <img class="preview_img" src="data:image/jpeg;base64, {{ img[1] }}"
             alt="image" id="imageslot" class="img">
             </a>
         {% endfor %}
         </div>
     {% else %}
-        <h1 class="header_1">Category is empty</h1>
+        <h1 class="header_1">no {{ subject }} yet (╥_╥)</h1>
     {% endif %}
     </div>
 {% endblock %}

@@ -13,27 +13,26 @@
 {% endblock %}
 
 {% block content %}
-    <div class="form_container">
-        <h1 class="header_1">Choose a subject</h1>
+    <div class="item_container">
+        <h1 class="header_1">choose a subject</h1>
         <div class="subject_box">
-            <a href="{{url_for('category', subject="funny")}}"><button class="subj_button">Funny</button></a>
-            <a href="{{url_for('category', subject="cats")}}"><button class="subj_button">Cats</button></a>
-            <a href="{{url_for('category', subject="dogs")}}"><button class="subj_button">Dogs</button></a>
-            <a href="{{url_for('category', subject="anime")}}"><button class="subj_button">Anime</button></a>
+            <a href="{{url_for('category', subject="funny")}}"><button class="button">funny</button></a>
+            <a href="{{url_for('category', subject="cats")}}"><button class="button">cats</button></a>
+            <a href="{{url_for('category', subject="dogs")}}"><button class="button">dogs</button></a>
+            <a href="{{url_for('category', subject="anime")}}"><button class="button">anime</button></a>
         </div>
-
         <div class="subject_box">
-            <a href="{{url_for('category', subject="trains")}}"><button class="subj_button">Trains</button></a>
-            <a href="{{url_for('category', subject="gaming")}}"><button class="subj_button">Gaming</button></a>
-            <a href="{{url_for('category', subject="art")}}"><button class="subj_button">Art</button></a>
-            <a href="{{url_for('category', subject="misc")}}"><button class="subj_button">Misc</button></a>
+            <a href="{{url_for('category', subject="trains")}}"><button class="button">trains</button></a>
+            <a href="{{url_for('category', subject="gaming")}}"><button class="button">gaming</button></a>
+            <a href="{{url_for('category', subject="art")}}"><button class="button">art</button></a>
+            <a href="{{url_for('category', subject="misc")}}"><button class="button">misc</button></a>
         </div>
     </div>
-    <div class="form_container">
+    <div class="item_container">
         <h1 class="header_1">OR</h1>
     </div>
-    <div class="form_container">
+    <div class="item_container">
         <h1 class="header_1">Click for random image</h1>
-        <a class="search_button" href="{{url_for('random_image')}}"><button>Random</button></a>
+        <a class="search_button" href="{{url_for('random_image')}}"><button class="button">random</button></a>
     </div>
 {% endblock %}
