@@ -37,7 +37,8 @@ CREATE TABLE "comment"(
     comment_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES "users" (user_id) ON DELETE CASCADE,
     image_id INTEGER REFERENCES "image" (image_id) ON DELETE CASCADE,
-    content TEXT
+    content TEXT,
+    time TIMESTAMP
 ); 
 
 CREATE TABLE "cmntlike"(
