@@ -11,10 +11,11 @@
 {% endblock %}
 
 {% block content %}
-    <div class="form_container">
+    <div class="item_container">
     {% if uploads is defined and uploads|length > 0 %}
-       <h1 class="header_1">Navigate to image page by clicking on a title</h1>
-       <table class="my_uploads">
+       <h1 class="header_1">Click title to navigate</h1>
+       <div class="upload_list">
+           <table class="my_uploads">
            <thead>
            <tr>
                <th>Title</th>
@@ -26,14 +27,15 @@
            <tbody>
            {% for upload in uploads %}
                <tr>
-                   <td><a class="link" href="{{url_for('show_image', id=upload[0])}}">{{ upload[2] }}</a></td>
+                   <td><a class="myup_link" href="{{url_for('show_image', image_id=upload[0])}}">{{ upload[2] }}</a></td>
                    <td>{{ upload[1] }}</td>
                    <td>{{ upload[3].strftime('%H:%M') }}</td>
                    <td>{{ upload[3].strftime('%d/%m/%Y') }}</td>
                </tr>
            {% endfor %}
            </tbody>
-       </table>
+           </table>
+        </div>
     {% else %}
        <h1 class="header_1">You have no uploads!</h1>
     {% endif %}
