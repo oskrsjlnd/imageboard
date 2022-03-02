@@ -37,6 +37,7 @@
             <label class="form_label" for="file">Max file size is 2MB<br></label>
             <input id="file" type="file" name="file" required><br>
             <input style="width:100px;" class="submit_button" type="submit" id="upload_button" value="Upload image">
+            <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
         </form>
     </div>
 {% endblock %}
