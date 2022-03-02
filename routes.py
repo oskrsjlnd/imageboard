@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, abort
 import re
 from app import app
 import database
@@ -22,6 +22,14 @@ def login():
     else:
         return render_template("index.html")
 
+@app.route("/user_list")
+def user_list():
+    if session["admin"]:
+        user_list = database.get_all_users()
+        return render_template("user_list.html", users=user_list)
+    else:
+        return render_template("notification.html", msg="You don't have authorization to view this page")
+
 @app.route("/create_acc", methods=["GET", "POST"])
 def create_acc():
     if request.method == "POST":
@@ -29,6 +37,7 @@ def create_acc():
         email = request.form["email"]
         password = request.form["password"]
         repeat_pw = request.form["repeat_pw"]
+
         if username == "" or email == "" or password == "" or repeat_pw == "":
             return render_template("create_acc.html", msg="Fill in all the required fields")
 
@@ -41,6 +50,16 @@ def create_acc():
             return render_template("create_acc.html", msg="Invalid username, password or email address")
     else:
         return render_template("create_acc.html", msg="")
+
+@app.route("/edit_admin_status/<int:user_id>", methods=["POST"])
+def edit_admin_status(user_id):
+    if session["admin"]:
+        if session["csrf_token"] != request.form["csrf_token"]:
+            return abort(403)
+        database.change_admin_status(user_id)
+        return redirect("/user_list")
+    else:
+        return render_template("notification.html", msg="You are not authorized")
 
 @app.route("/log_out")
 def log_out():
@@ -60,7 +79,7 @@ def search():
 def category(subject):
     subj_images = database.get_images_by_subject(subject)
     if len(subj_images) > 0:
-        return render_template("category.html", data=subj_images, subj=subject)
+        return render_template("category.html", data=subj_images, subject=subject)
     else:
         return render_template("category.html", subject=subject)
 
@@ -88,7 +107,7 @@ def random_image():
 def show_image(image_id):
     image_data = database.get_image(image_id)
     comment_data = database.get_comments(image_id)
-    likes = database.get_likes(image_data["image_id"])
+    likes = database.get_likes(image_id)
 
     if image_data is not None:
         return render_template("show_image.html", image_data=image_data, comment_data=comment_data, likes=likes)
@@ -98,6 +117,8 @@ def show_image(image_id):
 
 @app.route("/send_image", methods=["POST"])
 def send_image():
+    if session["csrf_token"] != request.form["csrf_token"]:
+            return abort(403)
     image = request.files["file"]
     title = request.form["name"]
     subject_name = request.form["subject"]
@@ -113,9 +134,12 @@ def send_image():
     else:
         return render_template("upload.html", msg="Check image requirements")
 
-@app.route("/delete_image/<int:user_id>/<int:image_id>")
+@app.route("/delete_image/<int:user_id>/<int:image_id>", methods=["POST"])
 def delete_image(image_id, user_id):
     if "user_id" in session:
+        if session["csrf_token"] != request.form["csrf_token"]:
+            return abort(403)
+
         if session["user_id"] == user_id:
             if database.delete_image(image_id):
                 return render_template("notification.html", msg="Image successfully deleted")
@@ -127,6 +151,8 @@ def delete_image(image_id, user_id):
 @app.route("/edit_image_title/<int:user_id>/<int:image_id>", methods=["POST"])
 def edit_image_title(image_id, user_id):
     if "user_id" in session:
+        if session["csrf_token"] != request.form["csrf_token"]:
+            return abort(403)
         if session["user_id"] == user_id:
             new_title = request.form["new_title"]
             if database.edit_image_title(image_id, new_title):
@@ -140,8 +166,10 @@ def edit_image_title(image_id, user_id):
 @app.route("/like_image/<int:image_id>", methods=["POST"])
 def like_image(image_id):
     if "user_id" in session:
+        if session["csrf_token"] != request.form["csrf_token"]:
+            return abort(403)
         user_id = session["user_id"]
-        database.like_image(user_id, image_id)
+        database.post_like(user_id, image_id)
         return redirect(f"/show_image/{image_id}")
     else:
         return render_template("login_error.html")
@@ -150,6 +178,8 @@ def like_image(image_id):
 @app.route("/post_comment/<int:image_id>", methods=["POST"])
 def post_comment(image_id):
     if "user_id" in session:
+        if session["csrf_token"] != request.form["csrf_token"]:
+            return abort(403)
         user_id = session["user_id"]
         content = request.form["comment"]
         if database.post_comment(user_id, image_id, content):
@@ -159,10 +189,12 @@ def post_comment(image_id):
     else:
         return render_template("login_error.html")
 
-@app.route("/delete_comment/<int:user_id>/<int:image_id>/<int:comment_id>")
+@app.route("/delete_comment/<int:image_id>/<int:user_id>/<int:comment_id>", methods=["POST"])
 def delete_comment(comment_id, image_id, user_id):
     if "user_id" in session:
-        if user_id == session["user_id"]:
+        if session["csrf_token"] != request.form["csrf_token"]:
+            return abort(403)
+        if user_id == session["user_id"] or session["admin"]:
             if database.delete_comment(comment_id):
                 return redirect(f"/show_image/{image_id}")
 

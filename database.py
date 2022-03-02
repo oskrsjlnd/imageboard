@@ -1,6 +1,7 @@
 from flask import session
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import db
+import secrets
 
 def new_user(username, password, email):
     try:
@@ -24,10 +25,38 @@ def login(username, password):
         session["user_id"] = user[0]
         session["username"] = user[1]
         session["admin"] = user[2]
+        session["csrf_token"] = secrets.token_hex(16)
         return True
     return False
 
+def get_all_users():
+    sql = """SELECT user_id, username, admin, email FROM users
+            ORDER BY user_id"""
+    result = db.session.execute(sql)
+    if result is not None:
+        data = result.fetchall()
+    return data
 
+def is_admin(user_id):
+    sql = """SELECT admin FROM users
+            WHERE user_id=:user_id"""
+    result = db.session.execute(sql, {"user_id": user_id})
+    admin_status = result.fetchone()
+    return admin_status[0]
+
+def change_admin_status(user_id):
+    if is_admin(user_id):
+        sql = f"""UPDATE users
+                SET admin='f'
+                WHERE user_id={user_id}"""
+    else:
+        sql = f"""UPDATE users 
+                SET admin='t' 
+                WHERE user_id={user_id}"""
+    db.session.execute(sql, {"user_id":user_id})
+    db.session.commit()
+
+# todo admin can add and delete subjects
 def create_subject(subject):
     try:
         sql = """INSERT INTO "subject" (name) VALUES (:name)"""
@@ -80,7 +109,8 @@ def edit_image_title(image_id, new_title):
 
 def get_user_uploads(user_id):
     sql = """SELECT image_id, subject_name, name, timezone FROM "image" 
-            WHERE user_id=:user_id ORDER BY timezone"""
+            WHERE user_id=:user_id 
+            ORDER BY timezone"""
     result = db.session.execute(sql, {"user_id":user_id})
     data = result.fetchall()
     result.close()
@@ -110,8 +140,13 @@ def get_random_image():
         return None
 
 def get_images_by_subject(subject):
-    sql = """SELECT image_id, encode(data, 'base64')
-            FROM "image" WHERE subject_name=:subject"""
+    sql = """SELECT image.image_id, encode(data, 'base64'), timezone, COUNT(imglike_id)
+            FROM "image"
+            LEFT OUTER JOIN "imglike"
+            USING (image_id)
+            WHERE subject_name=:subject
+            GROUP BY image.image_id
+            ORDER BY timezone DESC"""
     result = db.session.execute(sql, {"subject":subject})
     data = result.fetchall()
     return data
@@ -135,8 +170,10 @@ def get_image(image_id):
         return None
 
 
-def like_image(user_id, image_id):
-    sql = """INSERT INTO imglike (user_id, image_id)
+def post_like(user_id, image_id):
+    if liked(user_id, image_id):
+        return False
+    sql = """INSERT INTO "imglike" (user_id, image_id)
             VALUES (:user_id, :image_id)"""
     try:
         db.session.execute(sql, {"user_id":user_id, "image_id":image_id})
@@ -149,8 +186,20 @@ def get_likes(image_id):
     sql = """SELECT COUNT(*) FROM "imglike"
             WHERE image_id=:image_id"""
     result = db.session.execute(sql, {"image_id":image_id})
-    data = result.fetchone()[0]
-    return result
+    data = result.fetchone()
+    if data is not None:
+        return data[0]
+    return 0
+
+def liked(user_id, image_id):
+    sql = """SELECT * FROM "imglike"
+            WHERE image_id=:image_id
+            AND user_id=:user_id"""
+    result = db.session.execute(sql, {"image_id":image_id, "user_id":user_id})
+    data = result.fetchone()
+    if data is None:
+        return False
+    return True
 
 def post_comment(user_id, image_id, content):
     try:
