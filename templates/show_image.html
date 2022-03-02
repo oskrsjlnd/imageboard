@@ -43,25 +43,43 @@
             alt="image" id="imageslot" class="img">
 
             <div class="like_container">
-                <a method="POST" href="{{url_for('like_image', image_id=image_data["image_id"])}}">
-                <button class="button">Like</button>
-                </a>
-                <div class="like_amount">{{ likes }}</div>
+
+                <form method="POST" action="/like_image/{{image_data["image_id"]}}">
+                    <input type="submit" class="button" name="like_image" value="Like">
+                    <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                </form>
+
+                <div class="like_amount">
+                    {% if likes == 0 %}
+                        No likes yet
+                    {% elif likes == 1 %}
+                        {{ likes }} like
+                    {% else %}
+                        {{ likes }} likes!
+                    {% endif %}
+                </div>
             </div>
 
-            {% if session["user_id"] == image_data["user_id"] %}
+            {% if session["user_id"] == image_data["user_id"] or session["admin"] %}
 
             <div class="button_container">
 
-                <form class="form, edit_title_form" action="/edit_image_title/{{image_data["user_id"]}}/{{image_data["image_id"]}}" method="POST">
+                <form class="form, edit_title_form" 
+                action="/edit_image_title/{{image_data["user_id"]}}/{{image_data["image_id"]}}" method="POST">
+                    
                     <input class="edit_button" type="submit" id="new_title_button" value="Edit">
                     <input placeholder="Edit title" class="account_info" style="background-color:#1a1a1d;" 
                     type="text" id="new_title" name="new_title" size="15" required>
+                    <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                
                 </form>
 
-                <a method="POST" href="{{url_for('delete_image', user_id=image_data["user_id"], image_id=image_data["image_id"])}}">
-                    <button class="button">Delete image</button>
-                </a>
+                <form method="POST" action="/delete_image/{{image_data["user_id"]}}/{{image_data["image_id"]}}">
+                    
+                    <input type="submit" name="delete_image" class="button" value="Delete image">
+                    <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                
+                </form>
 
             </div>
             {% endif %}
@@ -70,10 +88,14 @@
         <div class="comment_section">
         {% if session["user_id"] %}
 
-            <form class="comment_form" id="comment_form" action="/post_comment/{{image_data["image_id"]}}" method="POST">
+            <form class="comment_form" id="comment_form" 
+            action="/post_comment/{{image_data["image_id"]}}" method="POST">
+
                 <textarea class="comment_input" placeholder="Enter comment here" rows="10" cols="20" 
                 id="comment" name="comment" maxlength="200" required autofocus></textarea>
                 <input class="send_comment" type="submit" id="comment_button" value="Send">
+                <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+
             </form>
 
         {% endif %}
@@ -97,10 +119,12 @@
 
                             <div class="comment_text">{{ comment[2] }}</div>
 
-                            {% if session["user_id"] == comment[4] %}
+                            {% if session["user_id"] == comment[4] or session["admin"] %}
                             <div class="delete_comment">
-                                <a method="POST" href="{{url_for('delete_comment', user_id=comment[4], comment_id=comment[0], image_id=image_data["image_id"])}}">
-                                    <button class="button">Delete</button></a>
+                                <form method="POST" action="/delete_comment/{{image_data["image_id"]}}/{{comment[4]}}/{{comment[0]}}">
+                                    <input type="submit" name="delete_comment" class="button" value="Delete">
+                                    <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                                </form>
                             </div>
                             {% endif %}
 
