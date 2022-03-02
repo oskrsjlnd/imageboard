@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %} - sajinboard</title>
+        <link rel="icon" href="{{ url_for('static', filename='icons/fav_icon.ico') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +17,10 @@
                 </ul>
             </nav>
             <ul class="navbuttons">
-            {% if session.user_id %}
+            {% if session["user_id"] %}
+                {% if session["admin"] %}
+                    <li><a href="{{url_for('user_list')}}"><button class="navbutton">User list</button></a></li>
+                {% endif %}
                     <li><a href="{{url_for('my_uploads')}}"><button class="navbutton">My uploads</button></a></li>
                     <li><a href="{{url_for('log_out')}}"><button class="navbutton">Log out</button></a></li>
             {% else %}
