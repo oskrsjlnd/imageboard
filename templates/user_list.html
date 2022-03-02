@@ -1,0 +1,48 @@
+{% extends "skeleton.html" %}
+
+{% block title %}
+    Users
+{% endblock %}
+
+{% block navlinks %}
+    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+    <li><a class="navtext" href="{{url_for('search')}}">Search</a></li>
+    <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="item_container">
+    {% if users is defined and users|length > 0 %}
+       <h1 class="header_1">List of registered users</h1>
+       <div class="upload_list">
+           <table class="my_uploads">
+           <thead>
+           <tr>
+               <th>Id</th>
+               <th>Username</th>
+               <th>Admin</th>
+               <th>Email</th>
+           </tr>
+           </thead>
+           <tbody>
+           {% for user in users %}
+               <tr>
+                   <td>
+                       <form method="POST" action="/edit_admin_status/{{user[0]}}">
+                       <input type="submit" class="edit_admin" name="edit_admin" value="{{user[0]}}">
+                       <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                       </form>
+                   </td>
+                   <td>{{ user[1] }}</td>
+                   <td>{{ user[2] }}</td>
+                   <td>{{ user[3] }}</td>
+               </tr>
+           {% endfor %}
+           </tbody>
+           </table>
+        </div>
+    {% else %}
+       <h1 class="header_1">No registered users</h1>
+    {% endif %}
+    </div>
+{% endblock %}
