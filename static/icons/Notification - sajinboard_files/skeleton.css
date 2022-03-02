@@ -1,0 +1,118 @@
+body {
+    background-color: #111113;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #0e0e10;
+    color: #c3073f;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 999;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 1px 1px 0px #c3073f,
+                2px 2px 0px #c3073f,
+                3px 3px 0px #c3073f,
+                4px 4px 0px #c3073f;
+}
+
+.navbutton {
+    background-color: #0a0a0c;
+    color: #c3073f;
+    font-size: .8em;
+    border: transparent;
+    margin: auto;
+    margin-right: 5px;
+    padding: 13px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 2em;
+    transition: all .2s ease-in-out;
+    box-shadow: 1px 1px 0px #c3073f,
+                2px 2px 0px #c3073f,
+                3px 3px 0px #c3073f,
+                4px 4px 0px #c3073f;
+}
+
+.navbutton:hover {
+    color: #950740;
+}
+
+.navbutton:active {
+    transform: translate3d(2px, 2px, 2px);
+    box-shadow: 0px 0px 0px;
+}
+
+.navbuttons {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbuttons li{
+    display: inline-block;
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
+nav {
+    height: 70px;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li{
+    font-size: .82em;
+    display: inline-block;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-left: 30px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 8px #950740;
+}
+
+nav li::after {
+    content: "";
+    display:block;
+    height: 3px;
+    width: 0%;
+    top: 0;
+    background-color: #c3073f;
+    transition: all .3s ease-in-out;
+}
+
+nav li:hover::after {
+    width: 100%;
+}
+
+.navtext {
+    color: #c3073f;
+    text-decoration: none;
+    font-size: 1.5em;
+    text-transform: uppercase;
+}
+
+.active {
+    text-shadow: 0 0 1px #c3073f,
+                 0 0 2px #c3073f,
+                 0 0 3px #c3073f,
+                 0 0 4px #c3073f,
+                 0 0 5px #c3073f;
+}
