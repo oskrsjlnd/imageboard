@@ -32,7 +32,10 @@
         <h1 class="header_1">OR</h1>
     </div>
     <div class="item_container">
-        <h1 class="header_1">Click for random image</h1>
-        <a class="search_button" href="{{url_for('random_image')}}"><button class="button">random</button></a>
+        <h1 class="header_1">click for random image</h1>
+        <div class="search_button">
+            <a href="{{url_for('random_image')}}">
+                <button class="button">random</button></a>
+        </div>
     </div>
 {% endblock %}
