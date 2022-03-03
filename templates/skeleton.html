@@ -5,7 +5,14 @@
         <link rel="icon" href="{{ url_for('static', filename='icons/fav_icon.ico') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block script %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+        {% endblock %}
+        {% block head %}
+        {% endblock %}
     </head>
     <body>
         <div class="container">
@@ -21,6 +28,7 @@
                 {% if session["admin"] %}
                     <li><a href="{{url_for('user_list')}}"><button class="navbutton">User list</button></a></li>
                 {% endif %}
+                    <li><a href="{{url_for('my_profile', user_id=session["user_id"])}}"><button class="navbutton">My profile</button></a></li>
                     <li><a href="{{url_for('my_uploads')}}"><button class="navbutton">My uploads</button></a></li>
                     <li><a href="{{url_for('log_out')}}"><button class="navbutton">Log out</button></a></li>
             {% else %}
