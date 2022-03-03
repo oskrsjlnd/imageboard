@@ -1,90 +1,9 @@
-{% extends "skeleton.html" %}
+{% extends "show_image.html" %}
 
 {% block title %}
-    Browse
+    random
 {% endblock %}
 
-{% block navlinks %}
-    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
-    <li><a class="navtext" href="{{url_for('search')}}">Search</a></li>
-    {% if session['user_id'] %}
-        <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
-    {% endif %}
-{% endblock %}
-
-{% block content %}
-    <div class="item_container">
-        {% if image_data is not defined %}
-            <h1 class="header_1">{{msg}}</h1>
-        {% else %}
-            <div class="image_box">
-                <table class="image_info">
-                    <thead>
-                        <tr>
-                        <th>Title</th>
-                        <th>Subject</th>
-                        <th>Time</th>
-                        <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <td>{{ image_data["title"] }}</td>
-                        <td>{{ image_data["subject_name"] }}</td>
-                        <td>{{ image_data["time"].strftime('%H:%M') }}</td>
-                        <td>{{ image_data["time"].strftime('%d/%m/%Y') }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <img src="data:image/jpeg;base64, {{image_data["image"]}}"
-                alt="image" id="imageslot" class="img">
-                {% if session["user_id"] == image_data["user_id"] %}
-                <div class="button_container">
-                    <a href="{{url_for('random_image')}}"><button class="button">Random</button></a>      
-                    <form class="form, edit_title_form" action="/edit_image_title/{{image_data["user_id"]}}/{{image_data["image_id"]}}" method="POST">
-                        <input class="edit_button" type="submit" id="new_title_button" value="Edit">
-                        <input placeholder="Edit title" class="account_info" style="background-color:#1a1a1d;" 
-                        type="text" id="new_title" name="new_title" size="15" required>
-                    </form>
-                    <a method="POST" href="{{url_for('delete_image', user_id=image_data["user_id"], image_id=image_data["image_id"])}}">
-                        <button class="button">Delete image</button></a>
-                </div>
-                {% endif %}
-            </div>
-            <div class="comment_section">
-            {% if session["user_id"] %}
-                    <form class="comment_form" id="comment_form" action="/post_comment/{{image_data["image_id"]}}" method="POST">
-                        <textarea class="comment_input" placeholder="Enter comment here" rows="10" cols="20" 
-                        id="comment" name="comment" maxlength="200" required autofocus></textarea>
-                        <input class="send_comment" type="submit" id="comment_button" value="Send">
-                    </form>
-            {% endif %}
-                {% if comment_data is defined and comment_data|length > 0 %}
-                    <div class="comment_boxes">
-                        {% for comment in comment_data %}
-                            <div class="comment_box">
-                                <div class="comment_user">
-                                    <table class="comment_info">
-                                        <thead>
-                                            <tr>
-                                            <th>{{ comment[1] }}</th>
-                                            <th>{{ comment[3].strftime('%H:%M') }} {{ comment[3].strftime('%d/%m/%Y') }}</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                                <div class="comment_text">{{ comment[2] }}</div>
-                                {% if session["user_id"] == comment[4] %}
-                                <div class="delete_comment">
-                                    <a method="POST" href="{{url_for('delete_comment', user_id=comment[4], comment_id=comment[0], image_id=image_data["image_id"])}}">
-                                        <button class="button">Delete</button></a>
-                                </div>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-        {% endif %}
-    </div>
+{% block random %}
+    <a href="{{url_for('random_image')}}"><button class="button">Random</button></a>
 {% endblock %}

@@ -1,7 +1,11 @@
 {% extends "skeleton.html" %}
 
 {% block title %}
-    Image
+    {{ image_data["title"] }}
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='/js/action_check.js') }}"></script>
 {% endblock %}
 
 {% block navlinks %}
@@ -20,6 +24,7 @@
         <div class="image_box">
 
             <table class="image_info">
+
                 <thead>
                     <tr>
                     <th>Title</th>
@@ -37,74 +42,70 @@
                     <td>{{ image_data["time"].strftime('%d/%m/%Y') }}</td>
                     </tr>
                 </tbody>
+
             </table>
 
-            <img src="data:image/jpeg;base64, {{image_data["image"]}}"
+            <img src="data:image/jpeg;base64, {{ image_data["image"] }}"
             alt="image" id="imageslot" class="img">
 
             <div class="like_container">
 
-                <form method="POST" action="/like_image/{{image_data["image_id"]}}">
-                    <input type="submit" class="button" name="like_image" value="Like">
-                    <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
-                </form>
-
                 <div class="like_amount">
-                    {% if likes == 0 %}
-                        No likes yet
-                    {% elif likes == 1 %}
-                        {{ likes }} like
-                    {% else %}
-                        {{ likes }} likes!
-                    {% endif %}
+                    {{likes}} <img class="like_icon" type="image/png" src="{{ url_for('static', filename='/icons/like.png') }}"/>
                 </div>
+
+                <div class="rand_butt">
+                    {% block random %}
+                    {% endblock %}
+                </div>
+
             </div>
-
+            
             {% if session["user_id"] == image_data["user_id"] or session["admin"] %}
-
-            <div class="button_container">
-
-                <form class="form, edit_title_form" 
-                action="/edit_image_title/{{image_data["user_id"]}}/{{image_data["image_id"]}}" method="POST">
-                    
-                    <input class="edit_button" type="submit" id="new_title_button" value="Edit">
-                    <input placeholder="Edit title" class="account_info" style="background-color:#1a1a1d;" 
-                    type="text" id="new_title" name="new_title" size="15" required>
-                    <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+            
+            <div class="image_button_container">
                 
-                </form>
-
-                <form method="POST" action="/delete_image/{{image_data["user_id"]}}/{{image_data["image_id"]}}">
-                    
-                    <input type="submit" name="delete_image" class="button" value="Delete image">
-                    <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
-                
-                </form>
-
+                <div class="image_bc_part">
+                    <form method="POST" action="/like_image/{{ image_data["image_id"] }}">
+                        <input type="submit" class="edit_button" name="like_image" value="Like">
+                        <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                    </form>
+                </div>
+                <div class="image_bc_part">
+                    <form onsubmit="return editImageTitle()"
+                        action="/edit_image_title/{{ image_data["user_id"] }}/{{ image_data["image_id"] }}" method="POST">
+                        <input class="edit_button" type="submit" id="new_title_button" value="Edit">
+                        <input class="edit_text" placeholder="Enter new title" maxlength="10"
+                            type="text" id="new_title" name="new_title" required>
+                        <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                    </form>
+                </div>
+                <div class="image_bc_part">
+                    <form method="POST" action="/delete_image/{{ image_data["user_id"] }}/{{ image_data["image_id"] }}"
+                        onsubmit="return deleteImage()">
+                        <input type="submit" name="delete_image" class="button" value="Delete image">
+                        <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                    </form>
+                </div>
             </div>
             {% endif %}
         </div>
 
         <div class="comment_section">
-        {% if session["user_id"] %}
-
-            <form class="comment_form" id="comment_form" 
-            action="/post_comment/{{image_data["image_id"]}}" method="POST">
-
-                <textarea class="comment_input" placeholder="Enter comment here" rows="10" cols="20" 
-                id="comment" name="comment" maxlength="200" required autofocus></textarea>
-                <input class="send_comment" type="submit" id="comment_button" value="Send">
-                <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
-
-            </form>
-
-        {% endif %}
+            {% if session["user_id"] %}
+                <form class="comment_form" id="comment_form" 
+                action="/post_comment/{{ image_data["image_id"] }}" method="POST">
+                    <textarea class="comment_input" placeholder="Enter comment here" rows="10" cols="20" 
+                    id="comment" name="comment" maxlength="200" required autofocus></textarea>
+                    <input class="send_comment" type="submit" id="comment_button" value="Send">
+                    <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                </form>
+            {% endif %}
 
             {% if comment_data is defined and comment_data|length > 0 %}
 
                 <div class="comment_boxes">
                     {% for comment in comment_data %}
-
                         <div class="comment_box">
                             <div class="comment_user">
                                 <table class="comment_info">
@@ -118,19 +119,20 @@
                             </div>
 
                             <div class="comment_text">{{ comment[2] }}</div>
-
                             {% if session["user_id"] == comment[4] or session["admin"] %}
-                            <div class="delete_comment">
-                                <form method="POST" action="/delete_comment/{{image_data["image_id"]}}/{{comment[4]}}/{{comment[0]}}">
-                                    <input type="submit" name="delete_comment" class="button" value="Delete">
-                                    <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
-                                </form>
-                            </div>
+                                <div class="delete_comment">
+                                    <form method="POST" onsubmit="return deleteComment()"
+                                    action="/delete_comment/{{ image_data["image_id"] }}/{{ comment[4] }}/{{ comment[0] }}">
+                                        <input type="submit" name="delete_comment" class="edit_button" value="Delete">
+                                        <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                                    </form>
+                                </div>
                             {% endif %}
-
                         </div>
                     {% endfor %}
                 </div>
+            {% else %}
+                    <div class="msg">No comments</div>
             {% endif %}
         </div>
     {% endif %}
