@@ -1,7 +1,7 @@
 {% extends "skeleton.html" %} 
 
 {% block title %}
-    Home
+    home
 {% endblock %}
 
 {% block navlinks %}
@@ -18,13 +18,19 @@
             <h1 class="header_1">Welcome to sajinboard!</h1>
             <h1 class="header_2">Logged in as: {{ session["username"] }}</h1>
     {% else %}
-        <h1 class="header_1">Enter username and password</h2>
-        <form class="form" action="/login" method="POST">
-            {% if msg is defined %}
-                <div class= "msg">{{ msg }}</div>
-            {% endif %}
-            <input class="account_info" autofocus placeholder="Username" id="username" type="text" name="username"><br>
-            <input class="account_info" placeholder="Password" id="password" type="password" name="password"><br>
+        <h1 class="header_1">Login</h2>
+        {% if msg is defined %}
+            <div class= "msg">{{ msg }}</div>
+        {% endif %}
+        <form name="login_form" class="form" action="/login" method="POST">
+            <div class="form_part">
+                <label>Username</label>
+                <input autofocus placeholder="Enter username" id="username" type="text" name="username">
+            </div>
+            <div class="form_part">
+                <label>Password</label>
+                <input placeholder="Enter password" id="pwd" type="password" name="pwd">
+            </div>
             <input class="submit_button" type="submit" id="login-but" value="Login">
         </form>
     {% endif %}
