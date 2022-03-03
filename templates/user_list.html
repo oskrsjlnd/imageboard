@@ -1,7 +1,11 @@
 {% extends "skeleton.html" %}
 
 {% block title %}
-    Users
+    users
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='/js/action_check.js')}}"></script>
 {% endblock %}
 
 {% block navlinks %}
@@ -14,10 +18,11 @@
     <div class="item_container">
     {% if users is defined and users|length > 0 %}
        <h1 class="header_1">List of registered users</h1>
-       <div class="upload_list">
-           <table class="my_uploads">
+       <div class="list_container">
+           <table class="list">
            <thead>
            <tr>
+               <th></th>
                <th>Id</th>
                <th>Username</th>
                <th>Admin</th>
@@ -28,9 +33,15 @@
            {% for user in users %}
                <tr>
                    <td>
-                       <form method="POST" action="/edit_admin_status/{{user[0]}}">
+                        <form class="delete_form" method="POST" action="/delete_user/{{user[0]}}" onsubmit= "return deleteUser()">
+                            <input class="del_user" type="submit" name="delete_user" value="&#xf2ed;">
+                            <input type="hidden" name="csrf_token" value="{{session["csrf_token"]}}">
+                        </form>
+                    </td>
+                   <td>
+                       <form method="POST" action="/edit_admin_status/{{user[0]}}" onsubmit="return makeAdmin()">
                        <input type="submit" class="edit_admin" name="edit_admin" value="{{user[0]}}">
-                       <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                       <input type="hidden" name="csrf_token" value="{{session["csrf_token"]}}">
                        </form>
                    </td>
                    <td>{{ user[1] }}</td>
