@@ -56,6 +56,27 @@ def change_admin_status(user_id):
     db.session.execute(sql, {"user_id":user_id})
     db.session.commit()
 
+def delete_user_by_id(user_id):
+    try:
+        sql = """DELETE FROM users WHERE user_id=:user_id"""
+        db.session.execute(sql, {"user_id":user_id})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def get_user_by_id(user_id):
+    sql = """SELECT * FROM users WHERE user_id=:user_id"""
+    result = db.session.execute(sql, {"user_id":user_id})
+    data = result.fetchone()
+    user = {}
+    user["user_id"] = data[0]
+    user["admin"] = data[1]
+    user["username"] = data[3]
+    user["email"] = data[4]
+    return user
+
+
 # todo admin can add and delete subjects
 def create_subject(subject):
     try:
