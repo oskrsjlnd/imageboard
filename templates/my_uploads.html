@@ -1,7 +1,7 @@
 {% extends "skeleton.html" %}
 
 {% block title %}
-    My uploads
+    my uploads
 {% endblock %}
 
 {% block navlinks %}
@@ -14,8 +14,8 @@
     <div class="item_container">
     {% if uploads is defined and uploads|length > 0 %}
        <h1 class="header_1">Click title to navigate</h1>
-       <div class="upload_list">
-           <table class="my_uploads">
+       <div class="list_container">
+           <table class="list">
            <thead>
            <tr>
                <th>Title</th>
@@ -27,7 +27,7 @@
            <tbody>
            {% for upload in uploads %}
                <tr>
-                   <td><a class="myup_link" href="{{url_for('show_image', image_id=upload[0])}}">{{ upload[2] }}</a></td>
+                   <td><a class="edit_admin" href="{{url_for('show_image', image_id=upload[0])}}">{{ upload[2] }}</a></td>
                    <td>{{ upload[1] }}</td>
                    <td>{{ upload[3].strftime('%H:%M') }}</td>
                    <td>{{ upload[3].strftime('%d/%m/%Y') }}</td>
