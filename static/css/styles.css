@@ -38,7 +38,6 @@
     display: grid;
     place-items: center;
     color: #c3073f;
-    padding-bottom: 30px;
 }
 
 .button  {
@@ -70,52 +69,73 @@
     transform: translate3d(2px,2px,2px);
 }
 
+.user_info {
+    display: flex;
+    margin: 20px 20px 20px;
+}
+
+.user_info p {
+    color: #950740;
+}
+
+.useri_control {
+    color: #c3073f;
+    margin: 30px 30px 30px;
+}
+
+.delete_user {
+    margin: 0px 50px 20px;
+}
+
 
 /*Form*/
 
 .form {
-    padding-bottom: 20px;
+    margin: 10px 40px 40px;
+    padding: 10px 10px 30px;
 }
 
-.form_label {
-    color: #c3073f;
-    font-size: 0.8em;
-    padding-left: 34px;
+.form_part {
+    height: 80px;
+    margin-bottom: 20px;
+    position: relative;
 }
 
-.account_info {
+.form_part label {
+    display: inline-block;
+    color: #950740;
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.form_part input, select {
+    display: block;
+    border: 1px solid #950740;
+    border-radius: .3em;
+    color: #950740;
     background-color: #141418;
-    color: #c3073f;
-    border: 1px solid transparent;
-    border-radius: 1em;
-    padding-left: 10px;
-    padding-right: 10px;
-    width: 250px;
+    font-family: inherit;
+    font-size: 1em;
+    width: 300px;
     height: 40px;
-    margin: 10px 30px 10px;
 }
 
-.subj_selection {
-    background-color: #141418;
+.form_part span {
+    margin-top: 5px;
     color: #c3073f;
-    border: 1px solid transparent;
-    border-radius: 1em;
-    margin: 10px 30px 10px;
-    width: 250px;
-    height: 40px;
 }
 
 .submit_button {
     background-color: #141418;
     color: #c3073f;
-    border: 1px solid transparent;
-    border-radius: 1em;
+    border: 1px solid #c3073f00;
+    border-radius: .4em;
     transition: all .2s ease-in-out;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
-    margin-left: 30px;
-    margin-top: 20px;
     padding: 8px 8px 8px;
+    margin-top: 15px;
+    margin-bottom: 10px;
     box-shadow: 1px 1px 0px #c3073f,
                 2px 2px 0px #c3073f,
                 3px 3px 0px #c3073f,
@@ -132,31 +152,29 @@
     transform: translate3d(2px, 2px, 2px);
 }
 
-#file::file-selector-button {
+#fileInput::file-selector-button {
     background-color: #141418;
     color: #c3073f;
     border: 0px;
-    padding: 8px 8px 8px;
+    padding: 10px 8px 8px;
     border-radius: .5em;
     transition: all .3s ease-in-out;
 }
 
-#file::file-selector-button:hover {
+#fileInput::file-selector-button:hover {
     color: #950740;
 }
 
-#file {
+#fileInput {
+    margin-bottom: 40px;
     color:#c3073f;
-    margin: 15px 32px 0;
 }
 
 
 /*Image*/
 
 .img {
-    min-width: 200px;
-    max-width: 400px;
-    max-height: 700px;
+    max-width: 450px;
     padding: 10px 10px;
     border-radius: 1em;
 }
@@ -173,36 +191,35 @@
 
 /*My upload list*/
 
-.upload_list {
-    width: 500px;
+.list_container {
+    width: 700px;
+    display: grid;
+    justify-content: center;
 }
 
-.my_uploads {
+.list {
+    border: 1px solid #c3073f;
     color: #c3073f;
     width: 580px;
-    border-spacing: 15px;
-    border-radius: 1em;
+    border-spacing: 30px;
+    border-radius: .4em;
     font-size: 1em;
-    margin: 15px 15px 15px;
+    margin: 20px 20px 20px;
     text-align: left;
 }
 
-.my_uploads th {
+.list th {
     color: #950740;
 }
 
-.my_uploads td{
-    padding-top: 10px;
+.list td{
+    padding-top: 5px;
 }
 
-.myup_link {
+.list {
     text-decoration: none;
     color: #c3073f;
     transition: all .2s ease-in-out;
-}
-
-.myup_link:hover {
-    color: #950740;
 }
 
 .edit_admin {
@@ -210,10 +227,18 @@
     background-color: #1a1a1d;
     border: 0px;
     font-size: 1em;
+    text-decoration: none;
 }
 
-.edit_admin:hover {
+.edit_admin:hover, .del_user:hover {
     color: #950740;
+}
+
+.del_user {
+    font-family: "FontAwesome";
+    color: #c3073f;
+    background-color: #1a1a1d;
+    border: 0px;
 }
 
 
@@ -243,7 +268,6 @@
     object-fit: cover;
     border-radius: 1em;
     transition: all .3s ease-in-out;
-    padding: 5px 5px 10px 5px;
 }
 
 .image_grid {
@@ -255,11 +279,11 @@
 
 .category_image_box {
     width: fit-content;
-    background-color: #141418;
+    background-color: #1c1c22;
     border-radius: 1em;
     margin: 10px 20px 20px 10px;
     transition: all .2s ease-in-out;
-    border: 1px solid #c3073f00;
+    border: 1px solid #1c1c22;
     box-shadow: 1px 1px 0px #c3073f,
                 2px 2px 0px #c3073f,
                 3px 3px 0px #c3073f,
@@ -285,7 +309,7 @@
     height: fit-content;
     border-radius: 1em;
     margin: 150px auto;
-    background-color: #1a1a1d;
+    background-color: #141418;
     position: relative;
     box-shadow: 1px 1px 0px #c3073f,
                 2px 2px 0px #c3073f,
@@ -298,7 +322,7 @@
 }
 
 .image_stats {
-    margin: 5px 10px 10px 10px;
+    padding: 5px 10px 10px 10px;
     color: #c3073f;
 }
 
@@ -309,6 +333,7 @@
     background-color: #141418;
     border-radius: 1em;
     margin: 10px 20px 20px 10px;
+    padding-bottom: 10px;
     box-shadow: 1px 1px 0px #c3073f,
                 2px 2px 0px #c3073f,
                 3px 3px 0px #c3073f,
@@ -339,25 +364,36 @@
     max-width: 405px;
 }
 
-.button_container {
+.image_button_container {
+    width: 410px;
+    margin-top: 15px;
     background-color: #141418;
     border-radius: 1em;
-    margin: 10px 20px 20px 10px;
 }
 
-.edit_title_form {
-    margin-left: -20px;
+.image_bc_part {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.edit_text {
+    margin-left: 10px;
+    border: 0px;
+    border-radius: 1em;
+    color: #950740;
+    background-color: #141418;
+    font-family: inherit;
+    font-size: 1em;
+    padding: 10px 10px 10px;
+    width: 120px;
 }
 
 .edit_button {
-    background-color: #1c1c22;
+    background-color: #1a1a1d;
     color: #c3073f;
     border-radius: 1em;
-    border: 1px solid #1c1c22;
+    border: 1px solid #1a1a1d;
     transition: all .2s ease-in-out;
-    width: fit-content;
-    height: fit-content;
-    margin: 20px 20px 40px 20px;
     padding: 8px 8px 8px;
     font-weight: 500;
     box-shadow: 1px 1px 0px #c3073f,
@@ -387,7 +423,7 @@
 
 .like_amount {
     color: #c3073f;
-    margin: 0px 30px 2px;
+    margin: 0px 0px 2px;
     background-color: #1a1a1d;
     border-radius: 1em;
     padding: 8px 8px 8px;
@@ -401,6 +437,10 @@
     width: 13px;
 }
 
+.rand_butt {
+    margin-left: 292px;
+}
+
 /*Image comment section*/
 
 .comment_section {
@@ -409,7 +449,7 @@
     background-color: #141418;
     border-radius: 1em;
     margin: 10px 20px 20px 10px;
-    padding: 5px 10px 5px;
+    padding: 10px 10px 10px;
     box-shadow: 1px 1px 0px #c3073f,
                 2px 2px 0px #c3073f,
                 3px 3px 0px #c3073f,
