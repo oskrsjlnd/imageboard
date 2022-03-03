@@ -1,14 +1,22 @@
 {% extends "skeleton.html" %}
 
 {% block title %}
-    Create account
+    register
+{% endblock %}
+
+{% block script %}
+    {{ super()}}
+{% endblock %}
+
+{% block head %}
+    <script src="{{ url_for('static', filename='/js/create_acc_check.js') }}"></script>
 {% endblock %}
 
 {% block navlinks %}
-    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
-    <li><a class="navtext" href="{{url_for('search')}}">Search</a></li>
+    <li><a class="navtext" href="{{ url_for('index') }}">Home</a></li>
+    <li><a class="navtext" href="{{ url_for('search') }}">Search</a></li>
     {% if session['user_id'] %}
-        <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
+        <li><a class="navtext" href="{{ url_for('upload') }}">Upload</a></li>
     {% endif %}
 {% endblock %}
 
@@ -18,19 +26,39 @@
             <h1 class="header_1">You are already logged in as:</h1>
             <h1 class="header_2">{{ session["username"] }}</h1>
     {% else %}
-            <h1 class="header_1">Account Information</h1>
-            <form class="form" action="/create_acc" method="POST">
-                <div class="msg">{{ msg }}</div>
-                <label class="form_label" for="username">Username 6-20 characters<br></label>
-                <input class="account_info" autofocus placeholder="Username" id="username" type="text" name="username" size="20" required><br>
-                <label class="form_label" for="email">Email address must be valid<br></label>
-                <input class="account_info" placeholder="Email address" id="email" type="text" name="email" required><br>
-                <label class="form_label" for="password">Password 8-20 characters<br></label>
-                <input class="account_info" placeholder="Password" id="password" type="password" name="password" size="20" required><br>
-                <label class="form_label" for="repeat_pw">Passwords must match<br></label>
-                <input class="account_info" placeholder="Repeat Password" id="repeat_pw" type="password" name="repeat_pw" class="formbox" required><br>
-                <input class="submit_button" type="submit" id="button" value="Sign Up">
+            <h1 class="header_1">Create account</h1>
+            
+            {% if msg is defined and msg|length > 0 %}
+            <div class="msg">{{ msg }}</div>
+            {% endif %}
+            
+            <form id="register" class="form" action="/create_acc" method="POST">
+                <div class="form_part">
+                    <label>Username<br></label>
+                    <input autofocus placeholder="Type in username" id="username" 
+                        type="text" name="username" minlength="6" maxlength="20" required/>
+                </div>
+                <div class="form_part">
+                    <label>Email<br></label>
+                    <input placeholder="e.g., something@provider.com" 
+                        id="email" type="email" name="email" required/>
+                </div>
+                <div class="form_part">
+                    <label>Password<br></label>
+                    <input placeholder="Choose a password" id="pwd" type="password" 
+                    name="pwd" minlength="8" maxlength="20" required/>
+                </div>
+                <div class="form_part">
+                    <label>Repeat password<br></label>
+                    <input placeholder="Type the password again" id="pwd2" type="password" 
+                        name="pwd2" equalTo="#pwd" required/>
+                </div>
+
+                <input class="submit_button" type="submit" id="button" value="Sign Up"/>
             </form>
+            <script>
+                $("#register").validate();
+            </script>
     {% endif %}
     </div>
 {% endblock %}
