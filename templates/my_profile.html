@@ -1,0 +1,44 @@
+{% extends "skeleton.html" %}
+
+{% block title %}
+    my profile
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='/js/action_check.js')}}"></script>
+{% endblock %}
+
+{% block navlinks %}
+    <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
+    <li><a class="navtext" href="{{url_for('search')}}">Search</a></li>
+    <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="item_container">
+        <div class="user_info">
+            <div class="useri_control">
+                <p>User id</p>
+                {{user["user_id"]}}
+            </div>
+            <div class="useri_control">
+                <p>Username</p>
+                {{user["username"]}}
+            </div>
+            <div class="useri_control">
+                <p>Admin</p>
+                {{user["admin"]}}
+            </div>
+            <div class="useri_control">
+                <p>Email</p>
+                {{user["email"]}}
+            </div>
+        </div>
+        <div class="user_info" style="display:grid; place-items: center;">
+            <form class="delete_form" method="POST" action="/delete_user/{{user["user_id"]}}" onsubmit= "return deleteUser()">
+                <input class="del_user" type="submit" name="delete_user" value="&#xf2ed; Delete this account">
+                <input type="hidden" name="csrf_token" value="{{session["csrf_token"]}}">
+            </form>
+        </div>
+    </div>
+{% endblock %}
