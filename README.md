@@ -28,21 +28,21 @@ Web-sovellus kuvien jakamiseen. Sivustolle voi lisätä kuvia ja keskustella nii
 # Sovelluksen käyttö
 Osa sivun toiminnoista vaatii Javascriptin sallimista.
 
-## Käyttäjätunnukset
+### Käyttäjätunnukset
 
 Sivustolle voi luoda käyttäjätunnuksen Sign up-painikkeesta. Näin aukeavalla sivulla on syötettävä 6-20 merkin pituinen käyttäjätunnus, sähköpostiosoite, 8-20 merkin pituinen salasana ja sama salasana uudelleen. Sisään kirjautuminen onnistuu etusivulla jonne pääsee Sign in-painikkeesta. Ulos kirjautuminen onnistuu Log out-painikkeesta.
 
-## Käyttäjätiedot
+### Käyttäjätiedot
 
 Itse lataamia kuvia pääsee tarkastelemaan My uploads-painikkeen kautta. Klikkaamalla ladatun kuvan nimeä aukeaa kuvaa vastaava sivu. Omia käyttäjätietoja voi tarkastella painamalla My profile-painiketta ja näin auki olevalla sivulla voi poistaa tunnuksensa delete this account-painikkeella.
 
 Ylläpitäjä pääsee User list-painikkeella sivulle, jolla on listattuna kaikki sivustolle rekisteröityneet käyttäjät tietoineen ja tällä sivulla roskakori-kuvaketta klikkaamalla voi poistaa kyseisen käyttäjän ja käyttäjän Id-numeroa klikkaamalla voi tehdä käyttäjästä ylläpitäjän tai poistaa ylläpitäjän oikeudet. Jos poistaa vahingossa omat ylläpitäjän oikeudet ne voi antaa itselleen takaisin saman istunnon yhteydessä.
 
-## Kuvien lataaminen
+### Kuvien lataaminen
 
 Upload-painikkeella pääsee kuvalataukseen, jossa kuvalle on annettava max 10 merkin pituinen otsikko, valittava kategoria valikosta ja maksimissaan 2MB kokoinen jpg tai png tiedosto omalta koneelta.
 
-## Kuvien selailu
+### Kuvien selailu
 
 Sivustolle ladattuja kuvia pääsee katselemaan Search-painikkeen kautta joko aihekohtaisesti tai random painikkeella, jota painamalla aukeaa satunnaisesti valittu kuva sivuston kaikkien kuvien joukosta. Kuvien selaamiseen ei tarvitse olla sisäänkirjautunut, mutta osa toiminnoista on varattu vain sisään kirjautuneille. 
 
