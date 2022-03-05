@@ -7,7 +7,7 @@
 {% block navlinks %}
     <li><a class="navtext" href="{{url_for('index')}}">Home</a></li>
     <li><a class="navtext" href="{{url_for('search')}}">Search</a></li>
-    {% if session["user"] %}
+    {% if session["user_id"] %}
     <li><a class="navtext" href="{{url_for('upload')}}">Upload</a></li>
     {% endif %}
 {% endblock %}
