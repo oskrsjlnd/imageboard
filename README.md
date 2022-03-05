@@ -3,28 +3,6 @@ Linkki sivustolle: [sajinboard](https://sajinboard.herokuapp.com/ "sajinboard")
 # Kuvaus
 Web-sovellus kuvien jakamiseen. Sivustolle voi lisätä kuvia ja keskustella niistä.
 
-# Toiminnallisuudet
-
-- Käyttäjä voi luoda tunnuksen ja kirjautua sisään tai ulos.
-- Käyttäjä pystyy selaamaan listaa kuvista aiheen valittuaan.
-- Käyttäjällä on mahdollisuus tuoda esille seuraava kuva satunnaisesti sivuston kaikista kuvista.
-- Käyttäjä voi lisätä kuvan sivustolle.
-- Halutessaan käyttäjä pystyy lisäämään (tai poistamaan) kommentin esillä olevalle kuvalle.
-- Halutessaan käyttäjä voi tykätä kuvasta.
-- Käyttäjä voi tykätä kuvassa olevasta kommentista?
-- Käyttäjällä pystyy halutessaan lisäämään (tai poistamaan) kuvan seurattujen kuvien listalle.
-- Kun käyttäjä haluaa hän saa poistettua tunnuksensa.
-
-- Ylläpitäjä voi poistaa minkä tahansa tunnuksen.
-- Ylläpitäjä pystyy poistamaan muiden kuvia ja kommentteja.
-
-# Välipalautus 1
-- Käyttäjä voi nyt luoda tunnuksen, kirjautua sisään ja ulos.
-
-# Välipalautus 2
-- Kirjautunut käyttäjä voi lisätä kuvan tietoineen sovellukseen.
-- Käyttäjä voi katsoa satunnaisesti valittuja kuvia.
-
 # Sovelluksen käyttö
 Osa sivun toiminnoista vaatii Javascriptin sallimista.
 
@@ -54,3 +32,25 @@ Kirjautunut käyttäjä voi myös kommentoida kuvaa Enter comment here-osiossa j
 # Testaus
 
 - Valmis normaali käyttäjätunnus:test123 salasana:testi123, ja ylläpitäjän tunnus:admin salasana:admin sähköposteina käytetty testi@testi.com, admin@admin.com ja samaa sähköpostia / tunnusta ei saa käyttää kahdesti.
+
+# Toiminnallisuudet
+
+- Käyttäjä voi luoda tunnuksen ja kirjautua sisään tai ulos.
+- Käyttäjä pystyy selaamaan listaa kuvista aiheen valittuaan.
+- Käyttäjällä on mahdollisuus tuoda esille seuraava kuva satunnaisesti sivuston kaikista kuvista.
+- Käyttäjä voi lisätä kuvan sivustolle.
+- Halutessaan käyttäjä pystyy lisäämään (tai poistamaan) kommentin esillä olevalle kuvalle.
+- Halutessaan käyttäjä voi tykätä kuvasta.
+- Käyttäjä voi tykätä kuvassa olevasta kommentista?
+- Käyttäjällä pystyy halutessaan lisäämään (tai poistamaan) kuvan seurattujen kuvien listalle.
+- Kun käyttäjä haluaa hän saa poistettua tunnuksensa.
+
+- Ylläpitäjä voi poistaa minkä tahansa tunnuksen.
+- Ylläpitäjä pystyy poistamaan muiden kuvia ja kommentteja.
+
+# Välipalautus 1
+- Käyttäjä voi nyt luoda tunnuksen, kirjautua sisään ja ulos.
+
+# Välipalautus 2
+- Kirjautunut käyttäjä voi lisätä kuvan tietoineen sovellukseen.
+- Käyttäjä voi katsoa satunnaisesti valittuja kuvia.
