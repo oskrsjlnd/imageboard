@@ -84,7 +84,10 @@ def my_profile(user_id):
 
 @app.route("/upload")
 def upload():
-    return render_template("upload.html")
+    if "user_id" in session:
+        return render_template("upload.html")
+    else:
+        return render_template("login_error.html")
 
 @app.route("/search")
 def search():
