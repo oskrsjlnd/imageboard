@@ -40,9 +40,3 @@ CREATE TABLE "comment"(
     content TEXT,
     time TIMESTAMP
 ); 
-
-CREATE TABLE "cmntlike"(
-    cmntlike_id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES "users" (user_id) ON DELETE CASCADE,
-    comment_id INTEGER REFERENCES "comment" (comment_id) ON DELETE CASCADE
-);
