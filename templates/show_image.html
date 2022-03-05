@@ -61,16 +61,17 @@
 
             </div>
             
+            {% if session["user_id"] %}
+                <div class="image_button_container">
+                    <div class="image_bc_part">
+                        <form method="POST" action="/like_image/{{ image_data["image_id"] }}">
+                            <input type="submit" class="edit_button" name="like_image" value="Like">
+                            <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
+                        </form>
+                    </div>
+            {% endif %}
             {% if session["user_id"] == image_data["user_id"] or session["admin"] %}
             
-            <div class="image_button_container">
-                
-                <div class="image_bc_part">
-                    <form method="POST" action="/like_image/{{ image_data["image_id"] }}">
-                        <input type="submit" class="edit_button" name="like_image" value="Like">
-                        <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
-                    </form>
-                </div>
                 <div class="image_bc_part">
                     <form onsubmit="return editImageTitle()"
                         action="/edit_image_title/{{ image_data["user_id"] }}/{{ image_data["image_id"] }}" method="POST">
@@ -87,8 +88,8 @@
                         <input type="hidden" name="csrf_token" value="{{ session["csrf_token"] }}"">
                     </form>
                 </div>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
 
         <div class="comment_section">
